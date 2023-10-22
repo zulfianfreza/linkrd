@@ -4,6 +4,9 @@ import {
   text,
   primaryKey,
   integer,
+  boolean,
+  json,
+  serial,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
@@ -56,3 +59,15 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
 );
+
+export const links = pgTable("link", {
+  id: serial("id").primaryKey().notNull(),
+  userId: text("user_id").notNull(),
+  type: text("type").notNull(),
+  label: text("label"),
+  url: text("url"),
+  active: boolean("active").default(false),
+  index: integer("index"),
+  clickCount: integer("click_count").default(0),
+  extra: json("extra"),
+});

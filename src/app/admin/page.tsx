@@ -1,10 +1,10 @@
-import React from "react";
-import Navbar from "~/components/navbar/navbar";
+import CardAddLink from "~/components/card/card-add-link";
+import Container from "~/components/container";
 
 export default function AdminPage() {
   return (
-    <div>
-      <Navbar />
-    </div>
+    <Container>
+      <CardAddLink />
+    </Container>
   );
 }
