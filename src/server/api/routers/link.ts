@@ -3,9 +3,15 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { links } from "~/server/db/schema";
 
-const linkRouter = createTRPCRouter({
+export const linkRouter = createTRPCRouter({
   addLink: protectedProcedure
-    .input(z.object({}))
+    .input(
+      z.object({
+        label: z.string(),
+        url: z.string(),
+        type: z.string(),
+      }),
+    )
     .mutation(async ({ input, ctx }) => {
       const user = ctx.session.user;
       if (!user) {
@@ -15,12 +21,14 @@ const linkRouter = createTRPCRouter({
         });
       }
 
+      const linksData = await ctx.db.query.links.findMany();
+
       const newLink = ctx.db.insert(links).values({
         userId: user.id,
-        label: "",
-        url: "",
-        index: 0,
-        type: "",
+        label: input.label,
+        url: input.url,
+        index: linksData.length,
+        type: input.type,
       });
 
       return newLink;
