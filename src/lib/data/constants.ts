@@ -1,19 +1,4 @@
-import {
-  Blend2,
-  BrushBig,
-  Chart,
-  ChartSquare,
-  Link,
-  Link21,
-  Setting,
-  Setting2,
-} from "iconsax-react";
-import {
-  HiOutlineChartBar,
-  HiOutlineCog,
-  HiOutlineLink,
-  HiOutlinePuzzle,
-} from "react-icons/hi";
+import { BrushBig, ChartSquare, Link, Setting2 } from "iconsax-react";
 
 export const TABS = [
   {

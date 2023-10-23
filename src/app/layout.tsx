@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { Montserrat } from "next/font/google";
 import { headers } from "next/headers";
 
+import Providers from "~/components/providers";
 import { TRPCReactProvider } from "~/trpc/react";
 
 const monsMontserrat = Montserrat({
@@ -24,8 +25,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${monsMontserrat.variable}`}>
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+      <body className={`font-sans ${monsMontserrat.variable} bg-gray-100`}>
+        <TRPCReactProvider headers={headers()}>
+          <Providers>{children}</Providers>
+        </TRPCReactProvider>
       </body>
     </html>
   );

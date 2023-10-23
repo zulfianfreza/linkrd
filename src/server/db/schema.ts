@@ -9,6 +9,7 @@ import {
   serial,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
+import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -16,6 +17,7 @@ export const users = pgTable("user", {
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  username: text("username"),
 });
 
 export const accounts = pgTable(
@@ -61,13 +63,19 @@ export const verificationTokens = pgTable(
 );
 
 export const links = pgTable("link", {
-  id: serial("id").primaryKey().notNull(),
-  userId: text("user_id").notNull(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   type: text("type").notNull(),
   label: text("label"),
   url: text("url"),
   active: boolean("active").default(false),
   index: integer("index"),
   clickCount: integer("click_count").default(0),
-  extra: json("extra"),
+  extra: text("extra"),
 });
+
+export type Link = InferSelectModel<typeof links>;
+export type NewLink = InferInsertModel<typeof links>;
+export type User = InferSelectModel<typeof users>;

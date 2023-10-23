@@ -10,6 +10,6 @@ export const userRouter = createTRPCRouter({
       where: eq(users.email, ctx.session.user.email ?? ""),
     });
 
-    return user as IUser;
+    return user;
   }),
 });
