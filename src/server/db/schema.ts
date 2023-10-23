@@ -76,6 +76,19 @@ export const links = pgTable("link", {
   extra: text("extra"),
 });
 
+export const sites = pgTable("site", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  profileTitle: text("profile_title"),
+  bio: text("bio"),
+  profileImage: text("profile_image"),
+  viewCount: integer("view_count").default(0),
+  metaTitle: text("meta_title"),
+  metaDescription: text("meta_description"),
+});
+
 export type Link = InferSelectModel<typeof links>;
 export type NewLink = InferInsertModel<typeof links>;
 export type User = InferSelectModel<typeof users>;
