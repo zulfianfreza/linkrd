@@ -80,7 +80,8 @@ export const sites = pgTable("site", {
   id: serial("id").primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" })
+    .unique(),
   profileTitle: text("profile_title"),
   bio: text("bio"),
   profileImage: text("profile_image"),
