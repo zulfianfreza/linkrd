@@ -11,7 +11,7 @@ interface LogoProps {
 
 export default function Logo({ className, path }: LogoProps) {
   return (
-    <Link href="/" className={cn("text-neutral-800")}>
+    <Link href={path ?? "/"} className={cn("text-neutral-800", className)}>
       Catalink
     </Link>
   );

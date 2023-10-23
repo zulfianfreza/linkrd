@@ -70,7 +70,7 @@ export default function CardYoutube({
 
   const handleUpdateLink = (active?: boolean) => {
     updateLinkMutation.mutate({
-      linkId: Number(link.id),
+      linkId: link.id,
       url,
       active,
     });

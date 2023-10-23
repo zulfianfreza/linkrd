@@ -71,7 +71,7 @@ export default function CardDivider({
     extra?: string;
   }) => {
     updateLinkMutation.mutate({
-      linkId: Number(link.id),
+      linkId: link.id,
       active,
       extra,
     });
@@ -79,7 +79,7 @@ export default function CardDivider({
 
   const handleUpdateActive = () => {
     updateLinkMutation.mutate({
-      linkId: Number(link.id),
+      linkId: link.id,
       active: !active,
     });
     setActive(!active);

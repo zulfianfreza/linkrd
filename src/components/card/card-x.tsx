@@ -66,7 +66,7 @@ export default function CardX({ link, refetch, hotReload }: CardXProps) {
 
   const handleUpdateLink = (active?: boolean) => {
     updateLinkMutation.mutate({
-      linkId: Number(link.id),
+      linkId: link.id,
       url,
       active,
     });

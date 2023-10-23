@@ -1,15 +1,13 @@
-import {
-  timestamp,
-  pgTable,
-  text,
-  primaryKey,
-  integer,
-  boolean,
-  json,
-  serial,
-} from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import {
+  boolean,
+  integer,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -63,7 +61,7 @@ export const verificationTokens = pgTable(
 );
 
 export const links = pgTable("link", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey().notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -77,7 +75,7 @@ export const links = pgTable("link", {
 });
 
 export const sites = pgTable("site", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey().notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" })
@@ -91,5 +89,6 @@ export const sites = pgTable("site", {
 });
 
 export type Link = InferSelectModel<typeof links>;
+export type Site = InferSelectModel<typeof sites>;
 export type NewLink = InferInsertModel<typeof links>;
 export type User = InferSelectModel<typeof users>;

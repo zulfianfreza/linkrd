@@ -8,7 +8,7 @@ export const createLinkSchema = z.object({
 });
 
 export const updateLinkSchema = z.object({
-  linkId: z.number(),
+  linkId: z.string(),
   label: z.string().optional(),
   url: z.string().optional(),
   active: z.boolean().optional(),

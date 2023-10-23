@@ -75,7 +75,7 @@ export default function CardTextLink({
 
   const handleUpdateLink = (active?: boolean) => {
     updateLinkMutation.mutate({
-      linkId: Number(link.id),
+      linkId: link.id,
       label,
       url,
       active,

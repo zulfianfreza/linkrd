@@ -3,11 +3,18 @@
 import Container from "~/components/container";
 import TabButtons from "~/components/tab/tab-buttons";
 import TabFonts from "~/components/tab/tab-fonts";
-import TabProfile from "~/components/tab/tab-profile";
+import TabProfile, { TabProfileLoading } from "~/components/tab/tab-profile";
+import TabWrapper from "~/components/tab/tab-wrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { TABS } from "~/lib/data/constants";
+import { api } from "~/trpc/react";
 
 export default function AppearancePage() {
+  const {
+    data: site,
+    isLoading: isLoadingSite,
+    refetch: refetchSite,
+  } = api.site.getSite.useQuery();
   return (
     <Container>
       <Tabs defaultValue="profile" className=" h-full w-full">
@@ -23,7 +30,13 @@ export default function AppearancePage() {
           ))}
         </TabsList>
         <TabsContent value="profile">
-          <TabProfile />
+          <TabWrapper>
+            {isLoadingSite ? (
+              <TabProfileLoading />
+            ) : (
+              <TabProfile site={site} refetch={refetchSite} />
+            )}
+          </TabWrapper>
         </TabsContent>
         <TabsContent value="themes">
           {/* <TabThemes theme={dataTheme} refetch={refetchTheme} /> */}

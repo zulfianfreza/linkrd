@@ -91,7 +91,7 @@ export default function CardHeader({
     extra?: string;
   }) => {
     updateLinkMutation.mutate({
-      linkId: Number(link.id),
+      linkId: link.id,
       label,
       active,
       extra,

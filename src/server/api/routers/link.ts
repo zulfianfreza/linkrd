@@ -4,6 +4,7 @@ import { links, type NewLink, users, type Link } from "~/server/db/schema";
 import { createLinkSchema, updateLinkSchema } from "../schemas/link";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
+import { createId } from "@paralleldrive/cuid2";
 
 export const linkRouter = createTRPCRouter({
   addLink: protectedProcedure
@@ -20,18 +21,19 @@ export const linkRouter = createTRPCRouter({
 
         const linksData = await ctx.db.query.links.findMany();
 
-        const newLink: NewLink = {
-          id: linksData.length + 1,
-          userId: user.id,
-          label: input.label,
-          url: input.url,
-          index: linksData.length,
-          type: input.type,
-          extra: input.extra,
-          active: true,
-        };
-
-        const res = ctx.db.insert(links).values(newLink).returning();
+        const res = ctx.db
+          .insert(links)
+          .values({
+            id: createId(),
+            userId: user.id,
+            label: input.label,
+            url: input.url,
+            index: linksData.length,
+            type: input.type,
+            extra: input.extra,
+            active: true,
+          })
+          .returning();
 
         return res;
       } catch (error) {
@@ -121,7 +123,7 @@ export const linkRouter = createTRPCRouter({
     }),
 
   deleteLink: protectedProcedure
-    .input(z.object({ linkId: z.number() }))
+    .input(z.object({ linkId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       await ctx.db.delete(links).where(eq(links.id, input.linkId));
     }),
@@ -159,7 +161,7 @@ export const linkRouter = createTRPCRouter({
             .set({
               index: i,
             })
-            .where(eq(links.id, linksData[i]?.id ?? 0));
+            .where(eq(links.id, linksData[i]?.id ?? ""));
         }
       }
 

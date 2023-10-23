@@ -1,7 +1,8 @@
+import { createId } from "@paralleldrive/cuid2";
 import { eq } from "drizzle-orm";
 import { sites } from "~/server/db/schema";
-import { siteParams, siteSchema } from "../schemas/site";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { siteSchema } from "../schemas/site";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const siteRouter = createTRPCRouter({
   updateSite: protectedProcedure
@@ -10,6 +11,7 @@ export const siteRouter = createTRPCRouter({
       const res = await ctx.db
         .insert(sites)
         .values({
+          id: createId(),
           userId: ctx.session.user.id,
           bio: input.bio,
           profileTitle: input.profileTitle,
@@ -18,7 +20,7 @@ export const siteRouter = createTRPCRouter({
           metaTitle: input.metaTitle,
         })
         .onConflictDoUpdate({
-          target: sites.id,
+          target: sites.userId,
           set: {
             bio: input.bio,
             profileTitle: input.profileTitle,
