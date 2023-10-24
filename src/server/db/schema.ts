@@ -106,7 +106,7 @@ export const themes = pgTable("theme", {
   buttonFontColor: text("button_font_color"),
   shadowColor: text("shadow_color"),
   socialIconPosition: text("social_icon_position"),
-  hideLogo: text("hide_logo"),
+  hideLogo: boolean("hide_logo"),
 });
 
 export type Link = InferSelectModel<typeof links>;
