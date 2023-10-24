@@ -88,7 +88,29 @@ export const sites = pgTable("site", {
   metaDescription: text("meta_description"),
 });
 
+export const themes = pgTable("theme", {
+  id: text("id").primaryKey().notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" })
+    .unique(),
+  themeType: text("theme_type"),
+  backgroundType: text("background_type"),
+  backgroundPrimary: text("background_primary"),
+  backgroundSecondary: text("background_secondary"),
+  backgroundImage: text("background_image"),
+  fontFamily: text("font_family"),
+  fontColor: text("font_color"),
+  buttonType: text("button_type"),
+  buttonColor: text("button_color"),
+  buttonFontColor: text("button_font_color"),
+  shadowColor: text("shadow_color"),
+  socialIconPosition: text("social_icon_position"),
+  hideLogo: text("hide_logo"),
+});
+
 export type Link = InferSelectModel<typeof links>;
 export type Site = InferSelectModel<typeof sites>;
 export type NewLink = InferInsertModel<typeof links>;
 export type User = InferSelectModel<typeof users>;
+export type Theme = InferSelectModel<typeof themes>;

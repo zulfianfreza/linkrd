@@ -1,8 +1,9 @@
 import { createId } from "@paralleldrive/cuid2";
 import { eq } from "drizzle-orm";
-import { sites } from "~/server/db/schema";
-import { siteSchema } from "../schemas/site";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { sites, users } from "~/server/db/schema";
+import { siteParams, siteSchema } from "../schemas/site";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { z } from "zod";
 
 export const siteRouter = createTRPCRouter({
   updateSite: protectedProcedure
@@ -41,4 +42,14 @@ export const siteRouter = createTRPCRouter({
 
     return res;
   }),
+
+  getSiteByUsername: publicProcedure
+    .input(siteParams)
+    .query(async ({ input, ctx }) => {
+      const site = await ctx.db.query.sites.findFirst({
+        where: eq(sites.userId, input.userId ?? ""),
+      });
+
+      return site;
+    }),
 });

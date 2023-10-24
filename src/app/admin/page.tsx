@@ -65,7 +65,7 @@ export default function AdminPage() {
   });
 
   const reorderLinksMutation = (
-    id: number,
+    id: string,
     newIndex: number,
     oldIndex: number,
   ) => {
@@ -92,10 +92,8 @@ export default function AdminPage() {
 
     setLinksData(newLinks);
 
-    console.log(newIndex, oldIndex, id);
-
     if (id && newIndex >= 0 && oldIndex >= 0) {
-      reorderLinksMutation(Number(id), newIndex, oldIndex);
+      reorderLinksMutation(id, newIndex, oldIndex);
     }
   };
 

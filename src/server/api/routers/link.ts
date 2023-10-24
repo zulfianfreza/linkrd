@@ -5,6 +5,7 @@ import { createLinkSchema, updateLinkSchema } from "../schemas/link";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { createId } from "@paralleldrive/cuid2";
+import { siteParams } from "../schemas/site";
 
 export const linkRouter = createTRPCRouter({
   addLink: protectedProcedure
@@ -98,16 +99,12 @@ export const linkRouter = createTRPCRouter({
     }),
 
   getLinksByUsername: publicProcedure
-    .input(z.object({ username: z.string() }))
+    .input(siteParams)
     .query(async ({ input, ctx }) => {
       try {
-        const user = await ctx.db.query.users.findFirst({
-          where: eq(users.username, input.username),
-        });
-
         const res = await ctx.db.query.links.findMany({
           where: and(
-            eq(links.userId, user ? user.id : ""),
+            eq(links.userId, input.userId ?? ""),
             eq(links.active, true),
           ),
           orderBy: asc(links.index),
@@ -133,7 +130,7 @@ export const linkRouter = createTRPCRouter({
       z.object({
         newIndex: z.number(),
         oldIndex: z.number(),
-        linkId: z.number(),
+        linkId: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {

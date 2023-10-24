@@ -17,7 +17,7 @@ export default function AppearancePage() {
   } = api.site.getSite.useQuery();
   return (
     <Container>
-      <Tabs defaultValue="profile" className=" h-full w-full">
+      <Tabs defaultValue="buttons" className=" h-full w-full">
         <TabsList className="flex h-fit justify-between overflow-x-scroll rounded-full bg-white [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map((tab, index) => (
             <TabsTrigger

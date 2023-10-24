@@ -10,6 +10,7 @@ import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Skeleton } from "../ui/skeleton";
+import { cn } from "~/lib/utils";
 
 interface TabProfileProps {
   site: Site | undefined;
@@ -18,6 +19,7 @@ interface TabProfileProps {
 
 export default function TabProfile({ site, refetch }: TabProfileProps) {
   const [profileTitle, setProfileTitle] = useState(site?.profileTitle ?? "");
+  const [bio, setBio] = useState(site?.bio ?? "");
 
   const session = useSession();
   const previewLoading = usePreviewLoading();
@@ -39,7 +41,7 @@ export default function TabProfile({ site, refetch }: TabProfileProps) {
   });
 
   const handleUpdateSite = () => {
-    updateSiteMutation.mutate({ profileTitle: profileTitle });
+    updateSiteMutation.mutate({ profileTitle, bio });
   };
 
   const onBlur = () => {
@@ -76,15 +78,18 @@ export default function TabProfile({ site, refetch }: TabProfileProps) {
         </div>
         <div className=" relative w-full">
           <textarea
-            id="url"
-            // value={url}
-            rows={4}
-            // onChange={(e) => setUrl(e.target.value)}
-            className=" peer w-full rounded-lg bg-neutral-100 p-2 pl-4 pt-5 hover:ring-2 hover:ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-black"
+            value={bio}
+            onBlur={onBlur}
+            onChange={(e) => setBio(e.target.value)}
+            placeholder=" "
+            className={cn(
+              "peer h-24 w-full rounded-lg bg-gray-100 p-2 pl-4 pt-6 text-sm outline-none transition hover:ring-2 hover:ring-gray-200 focus:ring-2 focus:ring-black disabled:cursor-not-allowed disabled:opacity-70",
+            )}
           />
           <label
-            htmlFor="url"
-            className=" pointer-events-none absolute left-4 top-[13px] origin-[0] transform truncate text-sm text-neutral-500 duration-150 peer-focus:-translate-y-2.5 peer-focus:scale-75"
+            className={cn(
+              "absolute left-4 top-4 z-10 origin-[0] -translate-y-2.5 scale-[0.75] transform truncate text-sm text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-2.5 peer-focus:scale-[0.75]",
+            )}
           >
             Bio
           </label>
