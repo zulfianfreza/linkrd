@@ -3,6 +3,7 @@ import { themeSchema } from "../schemas/theme";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { createId } from "@paralleldrive/cuid2";
 import { eq } from "drizzle-orm";
+import { siteParams } from "../schemas/site";
 
 export const themeRouter = createTRPCRouter({
   updateTheme: protectedProcedure
@@ -57,4 +58,14 @@ export const themeRouter = createTRPCRouter({
 
     return res;
   }),
+
+  getThemeByUsername: publicProcedure
+    .input(siteParams)
+    .query(async ({ input, ctx }) => {
+      const res = await ctx.db.query.themes.findFirst({
+        where: eq(themes.userId, input.userId ?? ""),
+      });
+
+      return res;
+    }),
 });

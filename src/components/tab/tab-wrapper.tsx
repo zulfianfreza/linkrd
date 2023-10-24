@@ -2,14 +2,14 @@
 
 import React from "react";
 
-export default function TabWrapper({
-  children,
-}: {
+interface TabWrapperProps {
   children: React.ReactNode;
-}) {
+  title: string;
+}
+export default function TabWrapper({ children, title }: TabWrapperProps) {
   return (
     <div className=" mt-4">
-      <h1 className=" text-lg font-semibold text-neutral-800">Profile</h1>
+      <h1 className=" text-lg font-semibold text-neutral-800">{title}</h1>
       {children}
     </div>
   );

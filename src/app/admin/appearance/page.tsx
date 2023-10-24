@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "~/components/container";
-import TabButtons from "~/components/tab/tab-buttons";
+import TabButtons, { TabButtonsLoading } from "~/components/tab/tab-buttons";
 import TabFonts from "~/components/tab/tab-fonts";
 import TabProfile, { TabProfileLoading } from "~/components/tab/tab-profile";
 import TabWrapper from "~/components/tab/tab-wrapper";
@@ -15,6 +15,42 @@ export default function AppearancePage() {
     isLoading: isLoadingSite,
     refetch: refetchSite,
   } = api.site.getSite.useQuery();
+
+  const {
+    data: theme,
+    isLoading: isLoadingTheme,
+    refetch: refetchTheme,
+  } = api.theme.getTheme.useQuery();
+
+  const hotReloadTheme = async () => {
+    const theme = await refetchTheme();
+    const iframe = document.getElementById("preview-page") as HTMLIFrameElement;
+
+    if (!iframe) return;
+
+    iframe.contentWindow?.postMessage(
+      {
+        type: "theme-updated",
+        theme: theme.data,
+      },
+      "*",
+    );
+  };
+
+  const hotReloadSite = async () => {
+    const site = await refetchSite();
+    const iframe = document.getElementById("preview-page") as HTMLIFrameElement;
+
+    if (!iframe) return;
+
+    iframe.contentWindow?.postMessage(
+      {
+        type: "site-updated",
+        site: site.data,
+      },
+      "*",
+    );
+  };
   return (
     <Container>
       <Tabs defaultValue="buttons" className=" h-full w-full">
@@ -30,11 +66,11 @@ export default function AppearancePage() {
           ))}
         </TabsList>
         <TabsContent value="profile">
-          <TabWrapper>
+          <TabWrapper title="Profile">
             {isLoadingSite ? (
               <TabProfileLoading />
             ) : (
-              <TabProfile site={site} refetch={refetchSite} />
+              <TabProfile site={site} refetch={hotReloadSite} />
             )}
           </TabWrapper>
         </TabsContent>
@@ -42,7 +78,13 @@ export default function AppearancePage() {
           {/* <TabThemes theme={dataTheme} refetch={refetchTheme} /> */}
         </TabsContent>
         <TabsContent value="buttons">
-          <TabButtons />
+          <TabWrapper title="Buttons">
+            {isLoadingTheme ? (
+              <TabButtonsLoading />
+            ) : (
+              <TabButtons theme={theme} refetch={hotReloadTheme} />
+            )}
+          </TabWrapper>
         </TabsContent>
         <TabsContent value="fonts">
           <TabFonts />

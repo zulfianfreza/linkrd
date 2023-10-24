@@ -15,14 +15,6 @@ export default async function Page({ params }: PageParams) {
     username: params.username,
   });
 
-  const links = await api.link.getLinksByUsername.query({
-    userId: user?.id,
-  });
-
-  const site = await api.site.getSiteByUsername.query({
-    userId: user?.id,
-  });
-
   if (!user) {
     return (
       <div className=" flex h-screen w-full items-center justify-center">
@@ -39,5 +31,22 @@ export default async function Page({ params }: PageParams) {
     );
   }
 
-  return <UsernameClientPage links={links} site={site} user={user as IUser} />;
+  const links = await api.link.getLinksByUsername.query({
+    userId: user.id,
+  });
+
+  const site = await api.site.getSiteByUsername.query({
+    userId: user.id,
+  });
+
+  const theme = await api.theme.getThemeByUsername.query({ userId: user.id });
+
+  return (
+    <UsernameClientPage
+      links={links}
+      site={site}
+      user={user as IUser}
+      theme={theme}
+    />
+  );
 }
