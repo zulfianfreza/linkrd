@@ -8,13 +8,14 @@ import type { Theme } from "~/server/db/schema";
 import { BUTTON_TYPE, BUTTON_TYPE_LIST } from "~/types/theme";
 import { api } from "~/trpc/react";
 import usePreviewLoading from "~/hooks/use-preview-loading";
+import { ThemeSchema } from "~/server/api/schemas/theme";
 
 interface TabButtonsProps {
   theme: Theme | undefined;
-  refetch: () => void;
+  handleUpdate: (payload: ThemeSchema) => void;
 }
 
-export default function TabButtons({ theme, refetch }: TabButtonsProps) {
+export default function TabButtons({ theme, handleUpdate }: TabButtonsProps) {
   const [buttonType, setButtonType] = useState<BUTTON_TYPE>(
     (theme?.buttonType as BUTTON_TYPE) ?? BUTTON_TYPE.OUTLINEROUNDED,
   );
@@ -28,22 +29,8 @@ export default function TabButtons({ theme, refetch }: TabButtonsProps) {
     theme?.shadowColor ?? "#000000",
   );
 
-  const previewLoading = usePreviewLoading();
-
-  const updateThemeMutation = api.theme.updateTheme.useMutation({
-    onMutate: () => {
-      previewLoading.setIsLoading(true);
-    },
-    onSuccess: () => {
-      refetch();
-    },
-    onSettled: () => {
-      previewLoading.setIsLoading(false);
-    },
-  });
-
   const handleUpdateTheme = (type?: BUTTON_TYPE) => {
-    updateThemeMutation.mutate({
+    handleUpdate({
       buttonType: type,
       buttonColor,
       buttonFontColor,

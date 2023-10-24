@@ -2,11 +2,13 @@
 
 import Container from "~/components/container";
 import TabButtons, { TabButtonsLoading } from "~/components/tab/tab-buttons";
-import TabFonts from "~/components/tab/tab-fonts";
+import TabFonts, { TabFontsLoading } from "~/components/tab/tab-fonts";
 import TabProfile, { TabProfileLoading } from "~/components/tab/tab-profile";
 import TabWrapper from "~/components/tab/tab-wrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import usePreviewLoading from "~/hooks/use-preview-loading";
 import { TABS } from "~/lib/data/constants";
+import { ThemeSchema } from "~/server/api/schemas/theme";
 import { api } from "~/trpc/react";
 
 export default function AppearancePage() {
@@ -21,6 +23,8 @@ export default function AppearancePage() {
     isLoading: isLoadingTheme,
     refetch: refetchTheme,
   } = api.theme.getTheme.useQuery();
+
+  const previewLoading = usePreviewLoading();
 
   const hotReloadTheme = async () => {
     const theme = await refetchTheme();
@@ -51,9 +55,25 @@ export default function AppearancePage() {
       "*",
     );
   };
+
+  const updateThemeMutation = api.theme.updateTheme.useMutation({
+    onMutate: () => {
+      previewLoading.setIsLoading(true);
+    },
+    onSuccess: async () => {
+      await hotReloadTheme();
+    },
+    onSettled: () => {
+      previewLoading.setIsLoading(false);
+    },
+  });
+
+  const handleUpdateTheme = (payload: ThemeSchema) => {
+    updateThemeMutation.mutate(payload);
+  };
   return (
     <Container>
-      <Tabs defaultValue="buttons" className=" h-full w-full">
+      <Tabs defaultValue="fonts" className=" h-full w-full">
         <TabsList className="flex h-fit justify-between overflow-x-scroll rounded-full bg-white [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map((tab, index) => (
             <TabsTrigger
@@ -82,12 +102,18 @@ export default function AppearancePage() {
             {isLoadingTheme ? (
               <TabButtonsLoading />
             ) : (
-              <TabButtons theme={theme} refetch={hotReloadTheme} />
+              <TabButtons theme={theme} handleUpdate={handleUpdateTheme} />
             )}
           </TabWrapper>
         </TabsContent>
         <TabsContent value="fonts">
-          <TabFonts />
+          <TabWrapper title="Fonts">
+            {isLoadingTheme ? (
+              <TabFontsLoading />
+            ) : (
+              <TabFonts theme={theme} handleUpdate={handleUpdateTheme} />
+            )}
+          </TabWrapper>
         </TabsContent>
       </Tabs>
     </Container>

@@ -7,6 +7,7 @@ import Avatar from "~/components/avatar";
 import Logo from "~/components/logo";
 import { getButtonStyle } from "~/hooks/use-button-style";
 import { dividerStyle, headerTextAlign } from "~/hooks/use-style";
+import { useThemeStyle } from "~/hooks/use-theme-style";
 import { cn, getVideoIdFromYoutubeUrl } from "~/lib/utils";
 import { Theme } from "~/server/db/schema";
 import type { IExtraDivider, IExtraTextAlign, ILink } from "~/types/link";
@@ -60,8 +61,13 @@ export default function UsernameClientPage({
     );
   }, []);
 
+  const { themeClass, themeStyle } = useThemeStyle(themeData);
+
   return (
-    <div className=" flex min-h-screen w-full flex-col">
+    <div
+      className={cn(" flex min-h-screen w-full flex-col", themeClass)}
+      style={themeStyle}
+    >
       <div className="mx-auto flex h-full min-h-screen w-full max-w-lg flex-col p-5 pt-16">
         <div className="flex-1 ">
           {/* PROFILE */}

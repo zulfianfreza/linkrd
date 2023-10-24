@@ -15,3 +15,5 @@ export const themeSchema = z.object({
   socialIconPosition: z.string().optional(),
   hideLogo: z.boolean().optional(),
 });
+
+export type ThemeSchema = z.infer<typeof themeSchema>;
