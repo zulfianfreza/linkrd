@@ -3,6 +3,7 @@ import { userRouter } from "./routers/user.router";
 import { linkRouter } from "./routers/link.router";
 import { siteRouter } from "./routers/site.router";
 import { themeRouter } from "./routers/theme.router";
+import { socialIconRouter } from "./routers/social-icon.router";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   link: linkRouter,
   site: siteRouter,
   theme: themeRouter,
+  socialIcon: socialIconRouter,
 });
 
 // export type definition of API

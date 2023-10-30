@@ -13,6 +13,8 @@ export enum BUTTON_TYPE {
   HARDSHADOWCIRCULAR = "hardshadowcircular",
 }
 
+export type SOCIAL_ICON_POSITION_TYPE = "top" | "bottom";
+
 export const BUTTON_TYPE_LIST = [
   {
     type: "Fill",
@@ -47,3 +49,31 @@ export const BUTTON_TYPE_LIST = [
     ],
   },
 ];
+
+export enum THEME_TYPE {
+  CUSTOM = "custom",
+  BALSAMIQ = "balsamiq",
+  AIR_WHITE = "air_white",
+  AIR_LEAF = "air_leaf",
+  AIR_SNOW = "air_snow",
+  AIR_MOON = "air_moon",
+  AIR_GREY = "air_grey",
+  AIR_SMOKE = "air_smoke",
+  AIR_BLACK = "air_black",
+}
+
+export enum BACKGROUND_TYPE {
+  SOLID = "solid",
+  GRADIENT = "gradient",
+  CUBE = "cube",
+  COLORFUL = "colorful",
+  POLKA = "polka",
+  HEXAGON = "hexagon",
+  MOON = "moon",
+  SPRINKLE = "sprinkle",
+  CLOUDY = "cloudy",
+  IMAGE = "image",
+  COLORED_PATTERNS = "colored_patterns",
+  COLORED_SHAPES = "colored_shapes",
+  CONTOUR_LINE = "contour_line",
+}

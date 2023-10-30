@@ -14,3 +14,7 @@ export const updateLinkSchema = z.object({
   active: z.boolean().optional(),
   extra: z.string().optional(),
 });
+
+export const linkParams = z.object({
+  linkId: z.string(),
+});

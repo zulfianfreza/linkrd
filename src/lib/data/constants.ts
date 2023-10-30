@@ -1,4 +1,11 @@
-import { BrushBig, ChartSquare, Link, Setting2 } from "iconsax-react";
+import {
+  BrushBig,
+  Chart,
+  Chart1,
+  ChartSquare,
+  Link,
+  Setting2,
+} from "iconsax-react";
 
 export const TABS = [
   {
@@ -6,16 +13,33 @@ export const TABS = [
     value: "profile",
   },
   {
-    label: "Themes & Backgrounds",
+    label: "Themes",
     value: "themes",
   },
   {
-    label: "Icons & Buttons",
-    value: "buttons",
+    label: "Custom Theme",
+    value: "custom",
+  },
+];
+
+export type TABS_TYPE = "PROFILE" | "THEMES" | "CUSTOM";
+export interface ITabs {
+  label: string;
+  value: TABS_TYPE;
+}
+
+export const TABS_LIST: ITabs[] = [
+  {
+    label: "Profile",
+    value: "PROFILE",
   },
   {
-    label: "Fonts",
-    value: "fonts",
+    label: "Themes",
+    value: "THEMES",
+  },
+  {
+    label: "Custom Theme",
+    value: "CUSTOM",
   },
 ];
 
@@ -33,7 +57,7 @@ export const MENU = [
   {
     label: "Analytics",
     href: "/admin/analytics",
-    icon: ChartSquare,
+    icon: Chart1,
   },
 
   {

@@ -31,7 +31,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
         },
       )}
     >
-      <Icon size={20} variant={active ? "Bulk" : "Linear"} />
+      <Icon size={20} />
       {label}
     </Link>
   );

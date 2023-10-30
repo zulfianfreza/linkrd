@@ -20,10 +20,15 @@ import Loading from "~/components/loading";
 import usePreviewLoading from "~/hooks/use-preview-loading";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
-import { ILink, ILinkDivider, ILinkTextAlign } from "~/types/link";
+import type {
+  IButtonLink,
+  ILink,
+  ILinkDivider,
+  ILinkTextAlign,
+} from "~/types/link";
 
 export default function AdminPage() {
-  const [linksData, setLinksData] = useState<ILink[]>([]);
+  const [linksData, setLinksData] = useState<ILink[] | undefined>(undefined);
 
   const previewLoading = usePreviewLoading();
   const { toast } = useToast();
@@ -33,8 +38,6 @@ export default function AdminPage() {
       setLinksData(data);
     },
   });
-
-  const dataLinks = linksData ?? data;
 
   const hotReloadIframe = async () => {
     const links = await refetch();
@@ -50,6 +53,8 @@ export default function AdminPage() {
       "*",
     );
   };
+
+  const dataLinks = linksData ?? data;
 
   const reorderMutation = api.link.reorderLinkPosition.useMutation({
     onMutate: () => {
@@ -87,9 +92,9 @@ export default function AdminPage() {
       return;
     }
 
-    const newLinks = [...linksData];
-    const [removed] = newLinks.splice(source.index, 1);
-    newLinks.splice(destination.index, 0, removed!);
+    const newLinks = data;
+    const [removed] = newLinks!.splice(source.index, 1);
+    newLinks!.splice(destination.index, 0, removed!);
 
     setLinksData(newLinks);
 
@@ -115,78 +120,74 @@ export default function AdminPage() {
           </p>
         </div>
       ) : (
-        <DragDropContext onDragEnd={reorderLinks}>
-          <DroppableStrictMode droppableId="links">
-            {(provided: DroppableProvided) => (
-              <ul
-                className="links mt-8 flex w-full flex-col gap-4"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {dataLinks?.map((link, index) => (
-                  <Draggable
-                    key={link.id}
-                    index={index}
-                    draggableId={link.id.toString()}
-                  >
-                    {(provided) => (
-                      <li
-                        className=" hover:cursor-default"
-                        {...provided.dragHandleProps}
-                        {...provided.draggableProps}
-                        ref={provided.innerRef}
-                      >
-                        {link.type == "button" ? (
-                          <CardButtonLink
-                            key={index}
-                            link={link}
-                            refetch={refetch}
-                            hotReload={hotReloadIframe}
-                          />
-                        ) : link.type == "header" ? (
-                          <CardHeader
-                            key={index}
-                            link={link as ILinkTextAlign}
-                            refetch={refetch}
-                            hotReload={hotReloadIframe}
-                          />
-                        ) : link.type == "youtube" ? (
-                          <CardYoutube
-                            key={index}
-                            link={link}
-                            refetch={refetch}
-                            hotReload={hotReloadIframe}
-                          />
-                        ) : link.type == "x" ? (
-                          <CardX
-                            key={index}
-                            link={link}
-                            refetch={refetch}
-                            hotReload={hotReloadIframe}
-                          />
-                        ) : link.type == "text" ? (
-                          <CardTextLink
-                            key={index}
-                            link={link}
-                            refetch={refetch}
-                            hotReload={hotReloadIframe}
-                          />
-                        ) : link.type == "divider" ? (
-                          <CardDivider
-                            key={index}
-                            link={link as ILinkDivider}
-                            refetch={refetch}
-                            hotReload={hotReloadIframe}
-                          />
-                        ) : null}
-                      </li>
-                    )}
-                  </Draggable>
-                ))}
-              </ul>
-            )}
-          </DroppableStrictMode>
-        </DragDropContext>
+        <>
+          <DragDropContext onDragEnd={reorderLinks}>
+            <DroppableStrictMode droppableId="links">
+              {(provided: DroppableProvided) => (
+                <ul
+                  className="links mt-8 flex w-full flex-col gap-4"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {dataLinks?.map((link, index) => (
+                    <Draggable
+                      key={link.id}
+                      index={index}
+                      draggableId={link.id.toString()}
+                    >
+                      {(provided) => (
+                        <li
+                          className=" hover:cursor-default"
+                          {...provided.dragHandleProps}
+                          {...provided.draggableProps}
+                          ref={provided.innerRef}
+                        >
+                          {link.type == "button" ? (
+                            <CardButtonLink
+                              key={index}
+                              link={link as IButtonLink}
+                              hotReload={hotReloadIframe}
+                            />
+                          ) : link.type == "header" ? (
+                            <CardHeader
+                              key={index}
+                              link={link as ILinkTextAlign}
+                              hotReload={hotReloadIframe}
+                            />
+                          ) : link.type == "youtube" ? (
+                            <CardYoutube
+                              key={index}
+                              link={link}
+                              hotReload={hotReloadIframe}
+                            />
+                          ) : link.type == "x" ? (
+                            <CardX
+                              key={index}
+                              link={link}
+                              hotReload={hotReloadIframe}
+                            />
+                          ) : link.type == "text" ? (
+                            <CardTextLink
+                              key={index}
+                              link={link}
+                              hotReload={hotReloadIframe}
+                            />
+                          ) : link.type == "divider" ? (
+                            <CardDivider
+                              key={index}
+                              link={link as ILinkDivider}
+                              hotReload={hotReloadIframe}
+                            />
+                          ) : null}
+                        </li>
+                      )}
+                    </Draggable>
+                  ))}
+                </ul>
+              )}
+            </DroppableStrictMode>
+          </DragDropContext>
+        </>
       )}
     </Container>
   );

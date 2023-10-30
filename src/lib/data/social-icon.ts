@@ -15,95 +15,94 @@ import {
   SiTelegram,
   SiTiktok,
   SiTwitch,
-  SiTwitter,
   SiWhatsapp,
   SiX,
   SiYoutube,
-} from 'react-icons/si'
+} from "react-icons/si";
 
 export const ICON = [
   {
-    label: 'Twitch',
+    label: "Twitch",
     icon: SiTwitch,
   },
   {
-    label: 'Dribbble',
+    label: "Dribbble",
     icon: SiDribbble,
   },
   {
-    label: 'Github',
+    label: "Github",
     icon: SiGithub,
   },
   {
-    label: 'Linkedin',
+    label: "Linkedin",
     icon: SiLinkedin,
   },
   {
-    label: 'Instagram',
+    label: "Instagram",
     icon: SiInstagram,
   },
   {
-    label: 'Twitter',
+    label: "Twitter",
     icon: SiX,
   },
   {
-    label: 'Tiktok',
+    label: "Tiktok",
     icon: SiTiktok,
   },
   {
-    label: 'Gitlab',
+    label: "Gitlab",
     icon: SiGitlab,
   },
   {
-    label: 'Bitbucket',
+    label: "Bitbucket",
     icon: SiBitbucket,
   },
   {
-    label: 'Youtube',
+    label: "Youtube",
     icon: SiYoutube,
   },
   {
-    label: 'Gmail',
+    label: "Gmail",
     icon: SiGmail,
   },
   {
-    label: 'Whatsapp',
+    label: "Whatsapp",
     icon: SiWhatsapp,
   },
   {
-    label: 'Spotify',
+    label: "Spotify",
     icon: SiSpotify,
   },
   {
-    label: 'Facebook',
+    label: "Facebook",
     icon: SiFacebook,
   },
   {
-    label: 'Telegram',
+    label: "Telegram",
     icon: SiTelegram,
   },
   {
-    label: 'Pinterest',
+    label: "Pinterest",
     icon: SiPinterest,
   },
   {
-    label: 'Sound Cloud',
+    label: "Sound Cloud",
     icon: SiSoundcloud,
   },
   {
-    label: 'Snapchat',
+    label: "Snapchat",
     icon: SiSnapchat,
   },
   {
-    label: 'Apple Music',
+    label: "Apple Music",
     icon: SiApplemusic,
   },
-]
+];
 
 export const SOCIAL_ICON_LIST = ICON.map((icon, index) => {
   return {
     id: index + 1,
     label: icon.label,
     icon: icon.icon,
-  }
-})
+  };
+});

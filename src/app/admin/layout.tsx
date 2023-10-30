@@ -1,9 +1,13 @@
-import { getServerSession } from "next-auth";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Navbar from "~/components/navbar/navbar";
 import PreviewPage from "~/components/preview-page";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
+
+export const metadata: Metadata = {
+  title: "Catalink Admin",
+};
 
 export default async function AdminLayout({
   children,
@@ -12,12 +16,16 @@ export default async function AdminLayout({
 }) {
   const session = await getServerAuthSession();
   if (!session) {
-    redirect("/logout");
+    redirect("/");
   }
   const user = await api.user.getCurrentUser.query();
+  if (user?.username == null || user?.username == "") {
+    redirect("/user-information");
+  }
+  const site = await api.site.getSite.query();
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} site={site} />
       <div className=" flex w-full bg-gray-100">
         <PreviewPage username={user?.username ?? ""} />
         {children}

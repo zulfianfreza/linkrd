@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import { LuCheck, LuX } from "react-icons/lu";
 import { FONT_LIST } from "~/lib/data/font";
 import { cn } from "~/lib/utils";
-import { ThemeSchema } from "~/server/api/schemas/theme";
-import { Theme } from "~/server/db/schema";
+import type { ThemeSchema } from "~/server/api/schemas/theme";
+import type { Theme } from "~/server/db/schema";
 import ColorPicker from "../color-picker";
 import { Button } from "../ui/button";
 import {
@@ -17,7 +17,7 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
-import { Skeleton } from "../ui/skeleton";
+import TabWrapper from "./tab-wrapper";
 
 interface TabFontsProps {
   theme: Theme | undefined;
@@ -51,12 +51,13 @@ export default function TabFonts({ theme, handleUpdate }: TabFontsProps) {
   };
 
   const handleUpdateTheme = () => {
-    handleUpdate({ fontColor, fontFamily });
+    handleUpdate({ fontColor, fontFamily, themeType: "custom" });
   };
 
   const handleUpdateFont = () => {
-    handleUpdateTheme();
     setFontDialog(!fontDialog);
+    if (fontFamily == theme?.fontFamily) return;
+    handleUpdateTheme();
   };
 
   const onBlurFontColor = () => {
@@ -71,48 +72,50 @@ export default function TabFonts({ theme, handleUpdate }: TabFontsProps) {
   const themeFont = FONT_LIST.find((font) => font.label == fontFamily);
   return (
     <>
-      <div className=" mt-2 rounded-[24px] bg-white p-6">
-        <div className="">
-          <p className=" text-neutral-800">Font</p>
-          <div className="mt-2 flex gap-x-2">
-            <div className=" flex h-12 w-12 items-center justify-center rounded-lg bg-gray-200 ">
-              <p className={cn(themeFont?.value.className)}>Aa</p>
+      <TabWrapper title="Fonts">
+        <div className=" mt-2 rounded-[24px] bg-white p-6">
+          <div className="">
+            <p className=" text-neutral-800">Font</p>
+            <div className="mt-2 flex gap-x-2">
+              <div className=" flex h-12 w-12 items-center justify-center rounded-lg bg-gray-200 ">
+                <p className={cn(themeFont?.value.className)}>Aa</p>
+              </div>
+              <button
+                onClick={toggleFontDialog}
+                className=" flex h-12 flex-1 cursor-pointer items-center justify-between rounded-lg border px-4"
+              >
+                <p className={cn(" text-sm", themeFont?.value.className)}>
+                  {fontFamily}
+                </p>
+                <ArrowDown2 size={16} />
+              </button>
             </div>
-            <button
-              onClick={toggleFontDialog}
-              className=" flex h-12 flex-1 cursor-pointer items-center justify-between rounded-lg border px-4"
-            >
-              <p className={cn(" text-sm", themeFont?.value.className)}>
-                {fontFamily}
-              </p>
-              <ArrowDown2 size={16} />
-            </button>
           </div>
+          <ColorPicker
+            label="Color"
+            color={fontColor}
+            setColor={setFontColor}
+            onBlur={onBlurFontColor}
+          />
         </div>
-        <ColorPicker
-          label="Color"
-          color={fontColor}
-          setColor={setFontColor}
-          onBlur={onBlurFontColor}
-        />
-      </div>
+      </TabWrapper>
       <Dialog open={fontDialog} onOpenChange={toggleFontDialog}>
         <DialogContent className=" w-full max-w-lg gap-0 p-0 sm:rounded-3xl">
           <DialogClose className=" absolute right-2.5 top-2.5 rounded-full p-2.5 hover:bg-neutral-100">
             <LuX />
           </DialogClose>
-          <DialogHeader className="p-6 pb-2">
+          <DialogHeader className="p-6 pb-4">
             <DialogTitle className=" text-center">Select a Font</DialogTitle>
           </DialogHeader>
+          <div className=" sticky top-0 bg-white px-4 py-2">
+            <Input
+              label="Search font"
+              value={searchFont}
+              onChange={handleSearchFont}
+            />
+          </div>
           <div className=" relative h-[320px] w-full overflow-y-scroll">
-            <div className=" sticky top-0 bg-white p-4 pb-2">
-              <Input
-                label="Search font"
-                value={searchFont}
-                onChange={handleSearchFont}
-              />
-            </div>
-            <div className=" flex flex-col px-2">
+            <div className=" flex flex-col px-4">
               {fontList.map((font, index) => (
                 <button
                   key={index}
@@ -150,18 +153,3 @@ export default function TabFonts({ theme, handleUpdate }: TabFontsProps) {
     </>
   );
 }
-
-export const TabFontsLoading = () => {
-  return (
-    <div className=" mt-2 rounded-[24px] bg-white p-6">
-      <div className="">
-        <Skeleton className=" h-6 w-24" />
-        <Skeleton className=" mt-2 h-12" />
-      </div>
-      <div className=" mt-8">
-        <Skeleton className=" h-6 w-24" />
-        <Skeleton className=" mt-2 h-12 w-64" />
-      </div>
-    </div>
-  );
-};

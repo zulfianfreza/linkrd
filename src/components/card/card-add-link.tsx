@@ -52,7 +52,11 @@ export default function CardAddLink({ hotReload }: CardAddLinkProps) {
   };
 
   const handleAddHeader = () => {
-    addLinkMutation.mutate({ label: "Title", type: "header" });
+    addLinkMutation.mutate({
+      label: "Title",
+      type: "header",
+      extra: JSON.stringify({ text_align: "LEFT" }),
+    });
   };
 
   const handleAddYoutube = () => {

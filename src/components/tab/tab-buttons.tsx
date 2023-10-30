@@ -1,21 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
-import ButtonTheme from "../button-theme";
-import ColorPicker from "../color-picker";
-import { Skeleton } from "../ui/skeleton";
+import { useState } from "react";
+import type { ThemeSchema } from "~/server/api/schemas/theme";
 import type { Theme } from "~/server/db/schema";
 import { BUTTON_TYPE, BUTTON_TYPE_LIST } from "~/types/theme";
-import { api } from "~/trpc/react";
-import usePreviewLoading from "~/hooks/use-preview-loading";
-import { ThemeSchema } from "~/server/api/schemas/theme";
+import ButtonTheme from "../button-theme";
+import ColorPicker from "../color-picker";
+import TabWrapper from "./tab-wrapper";
 
 interface TabButtonsProps {
   theme: Theme | undefined;
   handleUpdate: (payload: ThemeSchema) => void;
+  refetch: () => void;
 }
 
-export default function TabButtons({ theme, handleUpdate }: TabButtonsProps) {
+export default function TabButtons({
+  theme,
+  handleUpdate,
+  refetch,
+}: TabButtonsProps) {
   const [buttonType, setButtonType] = useState<BUTTON_TYPE>(
     (theme?.buttonType as BUTTON_TYPE) ?? BUTTON_TYPE.OUTLINEROUNDED,
   );
@@ -35,10 +38,13 @@ export default function TabButtons({ theme, handleUpdate }: TabButtonsProps) {
       buttonColor,
       buttonFontColor,
       shadowColor,
+      themeType: "custom",
     });
+    refetch();
   };
 
   const handleUpdateButtonType = (type: BUTTON_TYPE) => {
+    if (buttonType == type) return;
     setButtonType(type);
     handleUpdateTheme(type);
   };
@@ -47,67 +53,47 @@ export default function TabButtons({ theme, handleUpdate }: TabButtonsProps) {
     handleUpdateTheme();
   };
   return (
-    <div className=" mt-2 overflow-hidden rounded-[24px] bg-white p-6 shadow-sm">
-      {BUTTON_TYPE_LIST.map((button_type, index) => (
-        <div key={index} className=" mt-8">
-          <p className=" text-neutral-800">{button_type.type}</p>
-          <div className="mt-2 grid grid-cols-3 gap-8">
-            {button_type.buttonList.map((button, i) => (
-              <ButtonTheme
-                key={i}
-                type={button}
-                value={buttonType}
-                onClick={() => handleUpdateButtonType(button)}
-              />
-            ))}
+    <TabWrapper title="Buttons">
+      <div className=" mt-2 overflow-hidden rounded-[24px] bg-white p-6 shadow-sm">
+        {BUTTON_TYPE_LIST.map((button_type, index) => (
+          <div key={index} className=" mt-8">
+            <p className=" text-neutral-800">{button_type.type}</p>
+            <div className="mt-2 grid grid-cols-3 gap-8">
+              {button_type.buttonList.map((button, i) => (
+                <ButtonTheme
+                  key={i}
+                  type={button}
+                  value={buttonType}
+                  onClick={() => handleUpdateButtonType(button)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <ColorPicker
-        label="Button Color"
-        color={buttonColor}
-        onBlur={onBlur}
-        setColor={setButtonColor}
-      />
-
-      <ColorPicker
-        label="Button Font Color"
-        color={buttonFontColor}
-        onBlur={onBlur}
-        setColor={setButtonFontColor}
-      />
-
-      {BUTTON_TYPE_LIST[3]?.buttonList.includes(buttonType) ? (
         <ColorPicker
-          label="Shadow Color"
-          color={shadowColor}
+          label="Button Color"
+          color={buttonColor}
           onBlur={onBlur}
-          setColor={setShadowColor}
+          setColor={setButtonColor}
         />
-      ) : null}
-    </div>
+
+        <ColorPicker
+          label="Button Font Color"
+          color={buttonFontColor}
+          onBlur={onBlur}
+          setColor={setButtonFontColor}
+        />
+
+        {BUTTON_TYPE_LIST[3]?.buttonList.includes(buttonType) ? (
+          <ColorPicker
+            label="Shadow Color"
+            color={shadowColor}
+            onBlur={onBlur}
+            setColor={setShadowColor}
+          />
+        ) : null}
+      </div>
+    </TabWrapper>
   );
 }
-
-export const TabButtonsLoading = () => {
-  return (
-    <div className=" mt-2 overflow-hidden rounded-[24px] bg-white p-6 shadow-sm">
-      {[1, 1, 1, 1].map((_, index) => (
-        <div className=" mt-8 first:mt-0" key={index}>
-          <Skeleton className=" h-6 w-48" />
-          <div className="mt-2 grid grid-cols-3 gap-8">
-            <Skeleton className=" h-10" />
-            <Skeleton className=" h-10" />
-            <Skeleton className=" h-10" />
-          </div>
-        </div>
-      ))}
-
-      <div className=" mt-8">
-        <Skeleton className=" h-6 w-24" />
-        <Skeleton className=" mt-2 h-12 w-64" />
-      </div>
-    </div>
-  );
-};

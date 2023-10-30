@@ -1,9 +1,8 @@
 import { createId } from "@paralleldrive/cuid2";
 import { eq } from "drizzle-orm";
-import { sites, users } from "~/server/db/schema";
+import { links, sites } from "~/server/db/schema";
 import { siteParams, siteSchema } from "../schemas/site";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { z } from "zod";
 
 export const siteRouter = createTRPCRouter({
   updateSite: protectedProcedure
@@ -52,4 +51,41 @@ export const siteRouter = createTRPCRouter({
 
       return site;
     }),
+
+  updateViewCount: publicProcedure
+    .input(siteParams)
+    .query(async ({ input, ctx }) => {
+      const site = await ctx.db.query.sites.findFirst({
+        where: eq(sites.userId, input.userId ?? ""),
+      });
+
+      const res = await ctx.db.update(sites).set({
+        viewCount: (site?.viewCount ?? 0) + 1,
+      });
+
+      return res;
+    }),
+
+  getAnalytics: protectedProcedure.query(async ({ ctx }) => {
+    const site = await ctx.db.query.sites.findFirst({
+      where: eq(sites.userId, ctx.session.user.id),
+    });
+
+    const linksData = await ctx.db.query.links.findMany({
+      where: eq(links.userId, ctx.session.user.id),
+    });
+
+    let click = 0;
+
+    linksData.map((link) => (click += link.clickCount ?? 0));
+
+    const views = site?.viewCount ?? 0;
+    const ctr = (click / views) * 100;
+
+    return {
+      views,
+      click,
+      ctr,
+    };
+  }),
 });

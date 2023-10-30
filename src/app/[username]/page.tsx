@@ -1,16 +1,42 @@
-import React from "react";
-import { api } from "~/trpc/server";
-import UsernameClientPage from "./client-page";
+import type { Metadata } from "next";
 import Logo from "~/components/logo";
-import { IUser } from "~/types/user";
+import { api } from "~/trpc/server";
+import type { IUser } from "~/types/user";
+import UsernameClientPage from "./client-page";
 
 interface PageParams {
+  searchParams: {
+    is_creation_mode: string;
+  };
   params: {
     username: string;
   };
 }
 
-export default async function Page({ params }: PageParams) {
+export async function generateMetadata({
+  params,
+}: PageParams): Promise<Metadata> {
+  const user = await api.user.getUserByUsername.query({
+    username: params.username,
+  });
+
+  if (!user) {
+    return {
+      title: "Catalink | Page Not Found",
+    };
+  }
+
+  const site = await api.site.getSiteByUsername.query({
+    userId: user.id,
+  });
+
+  return {
+    title: site?.metaTitle ?? site?.profileTitle ?? user?.name,
+    description: site?.metaDescription,
+  };
+}
+
+export default async function Page({ params, searchParams }: PageParams) {
   const user = await api.user.getUserByUsername.query({
     username: params.username,
   });
@@ -31,6 +57,12 @@ export default async function Page({ params }: PageParams) {
     );
   }
 
+  const isCreationMode = searchParams.is_creation_mode;
+
+  if (!isCreationMode && user) {
+    await api.site.updateViewCount.query({ userId: user.id });
+  }
+
   const links = await api.link.getLinksByUsername.query({
     userId: user.id,
   });
@@ -41,12 +73,19 @@ export default async function Page({ params }: PageParams) {
 
   const theme = await api.theme.getThemeByUsername.query({ userId: user.id });
 
+  const socialIcons = await api.socialIcon.getSocialIconByUsername.query({
+    userId: user.id,
+  });
+
   return (
-    <UsernameClientPage
-      links={links}
-      site={site}
-      user={user as IUser}
-      theme={theme}
-    />
+    <>
+      <UsernameClientPage
+        links={links}
+        site={site}
+        user={user as IUser}
+        theme={theme}
+        socialIcons={socialIcons}
+      />
+    </>
   );
 }

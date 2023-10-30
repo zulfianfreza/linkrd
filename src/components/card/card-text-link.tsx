@@ -1,31 +1,26 @@
 "use client";
 
-import { Gallery, MouseSquare, Trash } from "iconsax-react";
+import { MouseSquare, Trash } from "iconsax-react";
 import { useState } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
+import { LuX } from "react-icons/lu";
 import GrabIcon from "~/components/icon/grab-icon";
 import { Switch } from "~/components/ui/switch";
 import usePreviewLoading from "~/hooks/use-preview-loading";
 import { useToast } from "~/hooks/use-toast";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
+import type { ILink } from "~/types/link";
 import { Button } from "../ui/button";
-import { LuX } from "react-icons/lu";
-import { ILink } from "~/types/link";
 
 interface CardTextLinkProps {
   link: ILink;
-  refetch: () => void;
   hotReload: () => void;
 }
 
 type COLLAPSE_TYPE = "DELETE" | "THUMBNAIL";
 
-export default function CardTextLink({
-  link,
-  refetch,
-  hotReload,
-}: CardTextLinkProps) {
+export default function CardTextLink({ link, hotReload }: CardTextLinkProps) {
   const [liveEditUrl, setLiveEditUrl] = useState(false);
   const [liveEditTitle, setLiveEditTitle] = useState(false);
   const [label, setLabel] = useState(link.label ?? "");

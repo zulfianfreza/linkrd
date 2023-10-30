@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash } from "iconsax-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuX } from "react-icons/lu";
 import GrabIcon from "~/components/icon/grab-icon";
 import { Switch } from "~/components/ui/switch";
@@ -14,23 +14,27 @@ import { Button } from "../ui/button";
 
 interface CardDividerProps {
   link: ILinkDivider;
-  refetch: () => void;
   hotReload: () => void;
 }
 
 type COLLAPSE_TYPE = "DELETE" | "THUMBNAIL";
 
-export default function CardDivider({
-  link,
-  refetch,
-  hotReload,
-}: CardDividerProps) {
+export default function CardDivider({ link, hotReload }: CardDividerProps) {
   const [active, setActive] = useState(link.active ?? true);
   const [showCollapse, setShowCollapse] = useState<boolean>(false);
   const [collapse, setCollapse] = useState<COLLAPSE_TYPE | null>(null);
   const [extra, setExtra] = useState<IExtraDivider>({
     divider_type: link.extra?.divider_type ?? "SOLID",
   });
+
+  useEffect(() => {
+    const extraData = JSON.parse(link.extra) as IExtraDivider;
+
+    setExtra({
+      ...extra,
+      divider_type: extraData.divider_type,
+    });
+  }, []);
 
   const previewLoading = usePreviewLoading();
   const { toast } = useToast();
@@ -117,8 +121,8 @@ export default function CardDivider({
 
         {/* RIGHT */}
         <div className="flex-1 pl-6">
-          <div className=" flex items-center">
-            <div className=" flex flex-1 flex-col gap-1 overflow-hidden pr-10 pt-6">
+          <div className=" flex items-center pt-6">
+            <div className=" flex flex-1 flex-col gap-1 overflow-hidden pr-10">
               <div className="flex flex-wrap gap-4">
                 {/* <div className=" relative"> */}
                 <button

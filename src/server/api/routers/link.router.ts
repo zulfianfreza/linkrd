@@ -1,11 +1,15 @@
+import { createId } from "@paralleldrive/cuid2";
 import { TRPCError } from "@trpc/server";
 import { and, asc, eq } from "drizzle-orm";
-import { links, type NewLink, users, type Link } from "~/server/db/schema";
-import { createLinkSchema, updateLinkSchema } from "../schemas/link";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { createId } from "@paralleldrive/cuid2";
+import { links, type Link } from "~/server/db/schema";
+import {
+  createLinkSchema,
+  linkParams,
+  updateLinkSchema,
+} from "../schemas/link";
 import { siteParams } from "../schemas/site";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const linkRouter = createTRPCRouter({
   addLink: protectedProcedure
@@ -46,27 +50,12 @@ export const linkRouter = createTRPCRouter({
     }),
 
   getLinks: protectedProcedure.query(async ({ ctx }) => {
-    try {
-      const user = ctx.session.user;
-      if (!user) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "you're not logged in",
-        });
-      }
+    const res = ctx.db.query.links.findMany({
+      where: eq(links.userId, ctx.session.user.id),
+      orderBy: asc(links.index),
+    });
 
-      const res = ctx.db.query.links.findMany({
-        where: eq(links.userId, user.id),
-        orderBy: asc(links.index),
-      });
-
-      return res;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Something went wrong.",
-      });
-    }
+    return res;
   }),
 
   updateLink: protectedProcedure
@@ -163,5 +152,22 @@ export const linkRouter = createTRPCRouter({
       }
 
       return linksData;
+    }),
+
+  incrementClickCount: publicProcedure
+    .input(linkParams)
+    .mutation(async ({ input, ctx }) => {
+      const link = await ctx.db.query.links.findFirst({
+        where: eq(links.id, input.linkId),
+      });
+
+      const res = await ctx.db
+        .update(links)
+        .set({
+          clickCount: (link?.clickCount ?? 0) + 1,
+        })
+        .where(eq(links.id, link?.id ?? ""));
+
+      return res;
     }),
 });

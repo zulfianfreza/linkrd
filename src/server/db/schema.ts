@@ -109,6 +109,17 @@ export const themes = pgTable("theme", {
   hideLogo: boolean("hide_logo"),
 });
 
+export const socialIcon = pgTable("social_icon", {
+  id: text("id").primaryKey().notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  iconId: integer("icon_id"),
+  url: text("url"),
+  active: boolean("active"),
+});
+
+export type SocialIcon = InferSelectModel<typeof socialIcon>;
 export type Link = InferSelectModel<typeof links>;
 export type Site = InferSelectModel<typeof sites>;
 export type NewLink = InferInsertModel<typeof links>;

@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import "~/styles/themes.css";
 
 import { Montserrat } from "next/font/google";
 import { headers } from "next/headers";

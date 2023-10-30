@@ -1,5 +1,8 @@
-import React from "react";
+import { getServerAuthSession } from "~/server/auth";
+import ClientHomePage from "./client-page";
 
-export default function HomePage() {
-  return <div>HomePage</div>;
+export default async function HomePage() {
+  const session = await getServerAuthSession();
+
+  return <ClientHomePage session={session} />;
 }

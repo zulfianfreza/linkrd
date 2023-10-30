@@ -1,14 +1,22 @@
 "use client";
 
 import Container from "~/components/container";
-import TabButtons, { TabButtonsLoading } from "~/components/tab/tab-buttons";
-import TabFonts, { TabFontsLoading } from "~/components/tab/tab-fonts";
-import TabProfile, { TabProfileLoading } from "~/components/tab/tab-profile";
-import TabWrapper from "~/components/tab/tab-wrapper";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import SkeletonTabBackground from "~/components/skeleton/skeleton-tab-background";
+import SkeletonTabButtons from "~/components/skeleton/skeleton-tab-buttons";
+import SkeletonTabFonts from "~/components/skeleton/skeleton-tab-fonts";
+import SkeletonTabProfile from "~/components/skeleton/skeleton-tab-profile";
+import SkeletonTabThemes from "~/components/skeleton/skeleton-tab-themes";
+import TabBackground from "~/components/tab/tab-background";
+import TabButtons from "~/components/tab/tab-buttons";
+import TabFonts from "~/components/tab/tab-fonts";
+import TabProfile from "~/components/tab/tab-profile";
+import TabThemes from "~/components/tab/tab-themes";
+import { Button } from "~/components/ui/button";
+import useActiveTab from "~/hooks/use-active-tab";
 import usePreviewLoading from "~/hooks/use-preview-loading";
-import { TABS } from "~/lib/data/constants";
-import { ThemeSchema } from "~/server/api/schemas/theme";
+import { TABS_LIST } from "~/lib/data/constants";
+import { cn } from "~/lib/utils";
+import type { ThemeSchema } from "~/server/api/schemas/theme";
 import { api } from "~/trpc/react";
 
 export default function AppearancePage() {
@@ -62,6 +70,7 @@ export default function AppearancePage() {
     },
     onSuccess: async () => {
       await hotReloadTheme();
+      await refetchTheme();
     },
     onSettled: () => {
       previewLoading.setIsLoading(false);
@@ -71,51 +80,65 @@ export default function AppearancePage() {
   const handleUpdateTheme = (payload: ThemeSchema) => {
     updateThemeMutation.mutate(payload);
   };
+
+  const { activeTab, setActiveTab } = useActiveTab();
   return (
     <Container>
-      <Tabs defaultValue="fonts" className=" h-full w-full">
-        <TabsList className="flex h-fit justify-between overflow-x-scroll rounded-full bg-white [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {TABS.map((tab, index) => (
-            <TabsTrigger
-              key={index}
-              value={tab.value}
-              className=" flex-1 rounded-full px-4 py-2.5 font-medium hover:bg-violet-700 hover:text-white data-[state=active]:bg-violet-700 data-[state=active]:text-white"
-            >
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <TabsContent value="profile">
-          <TabWrapper title="Profile">
-            {isLoadingSite ? (
-              <TabProfileLoading />
-            ) : (
-              <TabProfile site={site} refetch={hotReloadSite} />
+      <div className=" flex w-full rounded-full bg-white p-1">
+        {TABS_LIST.map((tab, index) => (
+          <Button
+            key={index}
+            onClick={() => setActiveTab(tab.value)}
+            className={cn(
+              " h-12 flex-1 rounded-full bg-white text-neutral-500 shadow-none hover:bg-violet-700 hover:text-white",
+              { "bg-violet-700 text-white": activeTab == tab.value },
             )}
-          </TabWrapper>
-        </TabsContent>
-        <TabsContent value="themes">
-          {/* <TabThemes theme={dataTheme} refetch={refetchTheme} /> */}
-        </TabsContent>
-        <TabsContent value="buttons">
-          <TabWrapper title="Buttons">
-            {isLoadingTheme ? (
-              <TabButtonsLoading />
-            ) : (
-              <TabButtons theme={theme} handleUpdate={handleUpdateTheme} />
-            )}
-          </TabWrapper>
-        </TabsContent>
-        <TabsContent value="fonts">
-          <TabWrapper title="Fonts">
-            {isLoadingTheme ? (
-              <TabFontsLoading />
-            ) : (
-              <TabFonts theme={theme} handleUpdate={handleUpdateTheme} />
-            )}
-          </TabWrapper>
-        </TabsContent>
-      </Tabs>
+          >
+            {tab.label}
+          </Button>
+        ))}
+      </div>
+      <div className={cn("hidden", { block: activeTab == "PROFILE" })}>
+        {isLoadingSite ? (
+          <SkeletonTabProfile />
+        ) : (
+          <TabProfile site={site} refetch={hotReloadSite} />
+        )}
+      </div>
+      <div className={cn(" mt-8 hidden", { block: activeTab == "CUSTOM" })}>
+        <h1 className=" text-lg font-semibold text-neutral-800">
+          Custom Theme
+        </h1>
+        <p className=" text-sm text-neutral-500">
+          Completely customize your Linktree profile. Change your background
+          with colors, gradients and images. Choose a button style, change the
+          typeface and more.
+        </p>
+        {isLoadingTheme ? (
+          <>
+            <SkeletonTabBackground />
+            <SkeletonTabButtons />
+            <SkeletonTabFonts />
+          </>
+        ) : (
+          <>
+            <TabBackground theme={theme} handleUpdate={handleUpdateTheme} />
+            <TabButtons
+              theme={theme}
+              handleUpdate={handleUpdateTheme}
+              refetch={refetchTheme}
+            />
+            <TabFonts theme={theme} handleUpdate={handleUpdateTheme} />
+          </>
+        )}
+      </div>
+      <div className={cn("hidden", { block: activeTab == "THEMES" })}>
+        {isLoadingTheme ? (
+          <SkeletonTabThemes />
+        ) : (
+          <TabThemes theme={theme} handleUpdate={handleUpdateTheme} />
+        )}
+      </div>
     </Container>
   );
 }

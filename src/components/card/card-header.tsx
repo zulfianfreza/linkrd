@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  Gallery,
-  MouseSquare,
   TextalignCenter,
   TextalignLeft,
   TextalignRight,
@@ -10,34 +8,28 @@ import {
 } from "iconsax-react";
 import { useState } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
+import { LuX } from "react-icons/lu";
 import GrabIcon from "~/components/icon/grab-icon";
 import { Switch } from "~/components/ui/switch";
 import usePreviewLoading from "~/hooks/use-preview-loading";
 import { useToast } from "~/hooks/use-toast";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
-import { Button } from "../ui/button";
-import { LuX } from "react-icons/lu";
 import type {
   IExtraTextAlign,
-  ILink,
   ILinkTextAlign,
   TEXT_ALIGN_TYPE,
 } from "~/types/link";
+import { Button } from "../ui/button";
 
 interface CardHeaderProps {
   link: ILinkTextAlign;
-  refetch: () => void;
   hotReload: () => void;
 }
 
 type COLLAPSE_TYPE = "DELETE" | "THUMBNAIL" | "TEXT-ALIGN";
 
-export default function CardHeader({
-  link,
-  refetch,
-  hotReload,
-}: CardHeaderProps) {
+export default function CardHeader({ link, hotReload }: CardHeaderProps) {
   const [liveEditTitle, setLiveEditTitle] = useState(false);
   const [label, setLabel] = useState(link.label ?? "");
   const [active, setActive] = useState(link.active ?? false);

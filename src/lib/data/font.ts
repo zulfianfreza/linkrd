@@ -2,6 +2,7 @@ import {
   Balsamiq_Sans,
   Bebas_Neue,
   Dancing_Script,
+  Inter,
   Montserrat,
   Nunito,
   Plus_Jakarta_Sans,
@@ -17,6 +18,9 @@ export const balsamiqSans = Balsamiq_Sans({
 
 export const spaceMono = Space_Mono({
   weight: ["400", "700"],
+  subsets: ["latin"],
+});
+export const inter = Inter({
   subsets: ["latin"],
 });
 
