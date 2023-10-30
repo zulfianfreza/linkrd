@@ -15,7 +15,7 @@ export default function ClientHomePage({
   session: Session | null;
 }) {
   return (
-    <div className=" min-h-screen w-full bg-white">
+    <div className=" min-h-[100dvh] w-full bg-white">
       <header className="fixed z-50 flex w-full items-center justify-between p-5 sm:px-8">
         <Logo />
         <div className="flex items-center gap-4">
