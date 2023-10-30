@@ -59,9 +59,20 @@ export const siteRouter = createTRPCRouter({
         where: eq(sites.userId, input.userId ?? ""),
       });
 
-      const res = await ctx.db.update(sites).set({
-        viewCount: (site?.viewCount ?? 0) + 1,
-      });
+      const res = await ctx.db
+        .insert(sites)
+        .values({
+          viewCount: 1,
+          userId: input.userId ?? "",
+          id: createId(),
+        })
+        .onConflictDoUpdate({
+          target: sites.userId,
+          set: {
+            viewCount: (site?.viewCount ?? 0) + 1,
+          },
+          where: eq(sites.userId, input.userId ?? ""),
+        });
 
       return res;
     }),
@@ -80,7 +91,7 @@ export const siteRouter = createTRPCRouter({
     linksData.map((link) => (click += link.clickCount ?? 0));
 
     const views = site?.viewCount ?? 0;
-    const ctr = (click / views) * 100;
+    const ctr = click / views ? (click / views) * 100 : 0;
 
     return {
       views,
