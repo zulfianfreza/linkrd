@@ -19,7 +19,7 @@ export default function PreviewPage({ username }: PreviewPageProps) {
   return (
     <div className="fixed right-0 hidden h-screen border-l-[1px] p-4 pt-20 md:block md:w-[316px] lg:w-[435px] xl:w-[568px]">
       <div className=" relative z-50 flex -translate-y-24 flex-col items-center justify-center">
-        <div className=" test relative z-10 h-[724px] w-[352px] translate-y-6 overflow-hidden rounded-[56px] border-[12px] border-black md:scale-50 lg:scale-[0.6] xl:scale-[0.7]">
+        <div className=" test relative z-10 h-[724px] w-[352px] translate-y-6 overflow-hidden rounded-[56px] border-[12px] border-black md:scale-[0.6] lg:scale-[0.65] xl:scale-[0.7]">
           <div className=" absolute left-1/2 top-5 h-6 w-[100px] -translate-x-1/2 rounded-full bg-black"></div>
           <iframe
             src={domain}

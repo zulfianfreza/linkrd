@@ -1,11 +1,13 @@
 "use client";
-import { ArrowRight2, Logout } from "iconsax-react";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import { HiChevronRight } from "react-icons/hi";
+import { SiFacebook, SiInstagram, SiTiktok, SiX } from "react-icons/si";
+import { Tilt } from "react-tilt";
 import Logo from "~/components/logo";
 import { Button } from "~/components/ui/button";
 
@@ -14,54 +16,56 @@ export default function ClientHomePage({
 }: {
   session: Session | null;
 }) {
+  const router = useRouter();
+  const defaultOptions = {
+    reverse: false, // reverse the tilt direction
+    max: 45, // max tilt rotation (degrees)
+    perspective: 1000, // Transform perspective, the lower the more extreme the tilt gets.
+    scale: 1, // 2 = 200%, 1.5 = 150%, etc..
+    speed: 1000, // Speed of the enter/exit transition
+    transition: true, // Set a transition on enter/exit.
+    axis: null, // What axis should be disabled. Can be X or Y.
+    reset: false, // If the tilt effect has to be reset on exit.
+    easing: "cubic-bezier(.03,.98,.52,.99)", // Easing on enter/exit.
+  };
   return (
     <div className=" min-h-[100dvh] w-full bg-white">
-      <header className="fixed z-50 flex w-full items-center justify-between p-5 sm:px-8">
-        <Logo />
-        <div className="flex items-center gap-4">
-          {session ? (
-            <>
-              <Link href="/admin" className=" text-neutral-800">
-                Admin
-              </Link>
+      <header className="fixed z-50 flex w-full items-center justify-between p-8">
+        <div className=" flex w-full justify-between rounded-full bg-white p-3 shadow-sm">
+          <Logo className=" ml-4" />
+          <div className="flex items-center gap-4">
+            {session ? (
+              <>
+                <Link href="/admin" className=" font-medium text-neutral-800">
+                  Admin
+                </Link>
+                <Button
+                  className=" h-14 gap-1 rounded-full bg-neutral-800 px-6 hover:bg-neutral-800/90"
+                  onClick={() => signOut()}
+                >
+                  {/* <Logout /> */}
+                  Logout
+                </Button>
+              </>
+            ) : (
               <Button
-                className=" h-12 gap-1 rounded-full bg-neutral-800 px-8"
-                onClick={() => signOut()}
+                onClick={() => signIn("google", { callbackUrl: "/admin" })}
+                // variant="outline"
+                className=" h-14 w-full gap-2 rounded-full bg-neutral-800 px-6 text-white hover:bg-neutral-800/90"
               >
-                {/* <Logout /> */}
-                Logout
+                <FcGoogle size={20} />
+                <p>Login with Google</p>
               </Button>
-            </>
-          ) : (
-            // <button
-            //   onClick={() => signIn("google", { callbackUrl: "/admin" })}
-            //   className=" h-12 rounded-full bg-gradient-to-r from-sky-500 via-indigo-600 to-violet-700 p-[2px] transition-all hover:bg-gradient-to-l"
-            // >
-            //   <div className=" flex h-full w-full items-center justify-center gap-1 rounded-full bg-white px-8 text-sm font-medium text-neutral-800">
-            //     <FcGoogle />
-            //     <p>Login with Google</p>
-            //   </div>
-            // </button>
-            <Button
-              onClick={() => signIn("google", { callbackUrl: "/admin" })}
-              variant="outline"
-              className=" h-12 w-full gap-1 rounded-full px-8"
-            >
-              <FcGoogle />
-              <p>Login with Google</p>
-            </Button>
-          )}
+            )}
+          </div>
         </div>
       </header>
 
-      <div className=" relative isolate flex h-screen w-full bg-white p-10 pt-20  lg:p-20">
-        <div
+      <div className=" relative isolate flex h-[100dvh] w-full bg-violet-900 p-10 pt-20  lg:p-20">
+        {/* <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-20 left-20 -z-10 transform-gpu overflow-hidden leading-none blur-3xl"
         >
-          {/* <p className=' bg-gradient-to-r from-violet-500 to-violet-900 bg-clip-text text-[520px] text-transparent opacity-50'>
-              Oo
-            </p> */}
           <div
             style={{
               clipPath:
@@ -69,37 +73,163 @@ export default function ClientHomePage({
             }}
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-sky-500 to-indigo-700 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
-        </div>
+        </div> */}
         <div className=" flex flex-1 flex-col justify-center">
           <div className="flex flex-col">
-            <h1 className=" text-[56px] font-black leading-none text-gray-800 md:text-[56px] lg:text-[72px]">
+            <h1 className=" text-[56px] font-black leading-none text-violet-300 md:text-[56px] lg:text-[72px]">
               One link to everything.
             </h1>
-            <p className=" mt-4 text-gray-500">
-              Catalink is a single link that you can share in your bio or social
-              media posts.
+            <p className=" mt-4 text-violet-300">
+              Linkstation is a single link that you can share in your bio or
+              social media posts.
             </p>
           </div>
           <div className=" mt-8 flex gap-x-2">
             <button
-              onClick={() => signIn("google")}
-              className=" flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-violet-700 to-violet-700 px-8 text-sm text-white "
+              onClick={async () => {
+                if (session) {
+                  router.push("/admin");
+                } else {
+                  await signIn("google");
+                }
+              }}
+              className=" flex h-14 items-center justify-center rounded-full bg-sky-400 px-6 text-sm text-white "
             >
-              <p className=" flex items-center gap-x-1">
-                Try It Now <ArrowRight2 size={20} />
+              <p className=" flex items-center gap-x-1 font-medium">
+                Try It Now <HiChevronRight size={20} />
               </p>
             </button>
           </div>
         </div>
-        <div className="hidden flex-1 justify-end md:flex">
-          <div className="relative md:w-[400px] lg:w-[450px] xl:w-[560px]">
+        <div className="relative hidden flex-1 justify-end md:flex">
+          <Tilt
+            options={defaultOptions}
+            className="  relative mt-20 rotate-2 md:w-[400px] lg:w-[450px] xl:w-[520px]"
+            style={{ transformStyle: "preserve-3d" }}
+          >
             <div className=" relative h-full w-full">
               <Image
-                src="/images/hero_image.png"
+                src="/images/link1.png"
                 fill
                 alt=""
                 className=" object-contain"
               />
+            </div>
+            <div
+              className=" absolute bottom-4 left-10"
+              style={{ transform: "translateZ(30px)" }}
+            >
+              <div className="  relative aspect-square  w-44">
+                <Image
+                  src="/images/link1-glasses.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div>
+            <div
+              className=" absolute -right-10 top-0"
+              style={{ transform: "translateZ(-10px)" }}
+            >
+              <div className="  relative aspect-square  w-80">
+                <Image
+                  src="/images/link1-beanie.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div>
+            <div
+              className=" absolute bottom-0 right-10"
+              style={{ transform: "translateZ(15px)" }}
+            >
+              <div className="  relative aspect-square  w-40">
+                <Image
+                  src="/images/link1-social.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div>
+          </Tilt>
+        </div>
+      </div>
+
+      <div className=" flex h-screen w-full overflow-hidden bg-green-300 p-10">
+        <div className="relative hidden flex-1 justify-center md:flex">
+          <Tilt
+            options={defaultOptions}
+            className="  mt-20 md:w-[400px] lg:w-[450px] xl:w-[480px]"
+          >
+            <div className=" relative h-full w-full rotate-2">
+              <Image
+                src="/images/thumbnail-hero.png"
+                fill
+                alt=""
+                className=" object-contain"
+              />
+            </div>
+          </Tilt>
+        </div>
+        <div className=" flex flex-1 flex-col items-start justify-center">
+          <div className="">
+            <h1 className="text-[56px] font-black leading-none text-green-900 md:text-[56px] lg:text-[72px]">
+              Create and customize your Linkstation in minutes
+            </h1>
+            <p className=" mt-4 font-medium text-green-900">
+              Connect your TikTok, Instagram, Twitter, website, store, videos,
+              music, podcast, events and more. It all comes together in a link
+              in bio landing page designed to convert.
+            </p>
+          </div>
+          <button
+            onClick={async () => {
+              if (session) {
+                router.push("/admin");
+              } else {
+                await signIn("google");
+              }
+            }}
+            className=" mt-8 flex h-14 items-center justify-center rounded-full bg-green-900 px-6 text-sm text-white hover:bg-green-900/90 "
+          >
+            <p className=" flex items-center gap-x-1 font-medium">
+              Get Started for Free
+            </p>
+          </button>
+        </div>
+      </div>
+
+      <div className=" relative w-full overflow-hidden bg-pink-900 p-12">
+        <div className=" z-[11] flex w-full flex-col justify-between gap-8 rounded-2xl bg-white p-16 px-6 lg:flex-row lg:px-16">
+          <div className="">
+            <Button
+              className=" h-14 rounded-full px-6"
+              onClick={async () => {
+                if (session) {
+                  router.push("/admin");
+                } else {
+                  await signIn("google");
+                }
+              }}
+            >
+              Get Started for Free
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className=" flex aspect-square w-14 items-center justify-center rounded-full bg-neutral-800">
+              <SiX className=" text-white" size={24} />
+            </div>
+            <div className=" flex aspect-square w-14 items-center justify-center rounded-full bg-neutral-800">
+              <SiTiktok className=" text-white" size={24} />
+            </div>
+            <div className=" flex aspect-square w-14 items-center justify-center rounded-full bg-neutral-800">
+              <SiInstagram className=" text-white" size={24} />
+            </div>
+            <div className=" flex aspect-square w-14 items-center justify-center rounded-full bg-neutral-800">
+              <SiX className=" text-white" size={24} />
             </div>
           </div>
         </div>

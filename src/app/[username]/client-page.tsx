@@ -120,7 +120,7 @@ export default function UsernameClientPage({
   return (
     <div
       className={cn(
-        " flex min-h-screen w-full flex-col bg-cover bg-center transition-all",
+        " flex min-h-screen w-full flex-col bg-neutral-50 bg-cover bg-center transition-all",
         themeClass,
       )}
       style={themeStyle}
@@ -212,9 +212,7 @@ export default function UsernameClientPage({
                           <div className=" absolute left-1.5">
                             <div
                               className=" relative aspect-square h-11 overflow-hidden"
-                              style={getThumbnailStyle(
-                                themeData?.buttonType as BUTTON_TYPE,
-                              )}
+                              style={getThumbnailStyle(themeData!)}
                             >
                               <Image
                                 src={extraThumbnail.imageUrl ?? ""}

@@ -120,14 +120,14 @@ export default function TabBackground({
   return (
     <TabWrapper title="Background">
       <div className=" mt-2 rounded-[24px] bg-white p-6">
-        <div className="grid grid-cols-4 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-3 gap-6 md:grid-cols-3 lg:grid-cols-4">
           <div
             className="flex cursor-pointer flex-col items-center justify-center gap-y-2"
             onClick={() => handleUpdateBackgroundType(BACKGROUND_TYPE.SOLID)}
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.SOLID,
               })}
             >
@@ -141,7 +141,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.GRADIENT,
               })}
             >
@@ -155,7 +155,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.IMAGE,
               })}
             >
@@ -171,7 +171,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.CUBE,
               })}
             >
@@ -187,7 +187,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.COLORED_PATTERNS,
               })}
             >
@@ -203,7 +203,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.COLORED_SHAPES,
               })}
             >
@@ -217,7 +217,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.HEXAGON,
               })}
             >
@@ -231,7 +231,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.MOON,
               })}
             >
@@ -245,7 +245,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.SPRINKLE,
               })}
             >
@@ -259,7 +259,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.CLOUDY,
               })}
             >
@@ -275,7 +275,7 @@ export default function TabBackground({
           >
             <div
               className={cn(" aspect-[10/16] w-full", {
-                "rounded-xl p-2 ring-2 ring-violet-300":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   backgroundType == BACKGROUND_TYPE.CONTOUR_LINE,
               })}
             >

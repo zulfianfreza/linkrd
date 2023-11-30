@@ -36,7 +36,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
   return (
     <TabWrapper title="Theme">
       <div className=" mt-2 rounded-[24px] bg-white p-6">
-        <div className="grid grid-cols-4 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-3 gap-6 md:grid-cols-3 lg:grid-cols-4">
           <button
             className="flex flex-col items-center justify-center gap-y-2"
             onClick={() => setActiveTab("CUSTOM")}
@@ -58,7 +58,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.BALSAMIQ,
               })}
             >
@@ -86,7 +86,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_WHITE,
               })}
             >
@@ -100,6 +100,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
             </div>
             <p className=" text-sm text-gray-700">Air White</p>
           </div>
+
           <div
             className={cn(
               "flex cursor-pointer flex-col items-center justify-center gap-y-2",
@@ -108,7 +109,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_LEAF,
               })}
             >
@@ -130,7 +131,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_MOON,
               })}
             >
@@ -152,7 +153,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_SNOW,
               })}
             >
@@ -174,7 +175,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_GREY,
               })}
             >
@@ -196,7 +197,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_SMOKE,
               })}
             >
@@ -218,7 +219,7 @@ export default function TabThemes({ theme, handleUpdate }: TabThemesProps) {
           >
             <div
               className={cn(" aspect-[10/16] w-full", balsamiqSans.className, {
-                "rounded-xl  ring-2 ring-violet-300 ring-offset-4":
+                "rounded-lg ring-2 ring-violet-300 ring-offset-[6px]":
                   themeType == THEME_TYPE.AIR_BLACK,
               })}
             >

@@ -100,7 +100,7 @@ export default function TabFonts({ theme, handleUpdate }: TabFontsProps) {
         </div>
       </TabWrapper>
       <Dialog open={fontDialog} onOpenChange={toggleFontDialog}>
-        <DialogContent className=" w-full max-w-lg gap-0 p-0 sm:rounded-3xl">
+        <DialogContent className=" h-fit w-full gap-0 rounded-3xl p-0 sm:rounded-3xl md:max-w-lg">
           <DialogClose className=" absolute right-2.5 top-2.5 rounded-full p-2.5 hover:bg-neutral-100">
             <LuX />
           </DialogClose>

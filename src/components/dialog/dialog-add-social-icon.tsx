@@ -113,7 +113,7 @@ export default function DialogAddSocialIcon({
       open={dialogAddSocialIcon.isOpen}
       onOpenChange={toggleDialogSocialIcon}
     >
-      <DialogContent className=" w-full max-w-lg gap-0 p-0 pb-6 sm:rounded-3xl">
+      <DialogContent className=" h-fit w-full gap-0 rounded-3xl  p-0 pb-6 sm:rounded-3xl md:max-w-lg">
         {step == "LIST" ? (
           <>
             <div className="relative flex items-center justify-between p-4 pb-4">

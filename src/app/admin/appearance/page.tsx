@@ -90,7 +90,7 @@ export default function AppearancePage() {
             key={index}
             onClick={() => setActiveTab(tab.value)}
             className={cn(
-              " h-12 flex-1 rounded-full bg-white text-neutral-500 shadow-none hover:bg-violet-700 hover:text-white",
+              " h-12 flex-1 rounded-full bg-white text-neutral-800 shadow-none hover:bg-violet-700 hover:text-white",
               { "bg-violet-700 text-white": activeTab == tab.value },
             )}
           >
@@ -110,7 +110,7 @@ export default function AppearancePage() {
           Custom Theme
         </h1>
         <p className=" text-sm text-neutral-500">
-          Completely customize your Linktree profile. Change your background
+          Completely customize your Linkstation profile. Change your background
           with colors, gradients and images. Choose a button style, change the
           typeface and more.
         </p>

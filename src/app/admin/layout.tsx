@@ -6,7 +6,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
 export const metadata: Metadata = {
-  title: "Catalink Admin",
+  title: "Linkstation Admin",
 };
 
 export default async function AdminLayout({
@@ -26,7 +26,7 @@ export default async function AdminLayout({
   return (
     <>
       <Navbar user={user} site={site} />
-      <div className=" flex w-full bg-gray-100">
+      <div className=" flex w-full bg-neutral-100">
         <PreviewPage username={user?.username ?? ""} />
         {children}
       </div>

@@ -1,20 +1,20 @@
 import "~/styles/globals.css";
 import "~/styles/themes.css";
 
-import { Montserrat } from "next/font/google";
+import { Noto_Sans } from "next/font/google";
 import { headers } from "next/headers";
 
 import Providers from "~/components/providers";
 import { TRPCReactProvider } from "~/trpc/react";
 
-const monsMontserrat = Montserrat({
+const monserrat = Noto_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-sans",
 });
 
 export const metadata = {
-  title: "Catalink",
+  title: "Linkstation",
   description: "Link in bio website",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
@@ -26,7 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${monsMontserrat.variable} bg-gray-100`}>
+      <body
+        className={`font-sans ${monserrat.variable} bg-gray-100 tracking-tight antialiased`}
+      >
         <TRPCReactProvider headers={headers()}>
           <Providers>{children}</Providers>
         </TRPCReactProvider>

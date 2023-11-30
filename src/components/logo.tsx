@@ -1,6 +1,7 @@
 "use client";
 
-import { Link21 } from "iconsax-react";
+import { Nunito } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { monserrat } from "~/lib/data/font";
@@ -12,25 +13,46 @@ interface LogoProps {
   target?: React.HTMLAttributeAnchorTarget | undefined;
 }
 
+const font = Nunito({ subsets: ["latin"] });
+
 export default function Logo({ className, path, target }: LogoProps) {
   return (
     <Link
       href={path ?? "/"}
       className={cn(
-        "flex items-center gap-2 font-medium tracking-tighter text-neutral-800",
+        "flex items-center gap-1 font-medium tracking-tighter text-neutral-800",
         className,
-        monserrat.className,
+        font.className,
       )}
       target={target}
     >
-      {/* <div className=" relative aspect-square h-8 overflow-hidden rounded-full bg-gradient-to-r from-violet-700 to-pink-500">
-        <div className=" absolute left-3 top-1 aspect-square h-10 rounded-full border-[1.5px] border-white"></div>
-        <div className=" absolute bottom-1 left-3 aspect-square h-10 rounded-full border-[1.5px] border-white"></div>
+      {/* <div className=" flex">
+        <div className=" h-6 w-3 rounded-bl-full rounded-tr-full border-2 border-violet-700"></div>
+        <div className=" -ml-[2px] mt-[22px] h-2 w-4 rounded-bl-full rounded-tr-full border-2 border-violet-700"></div>
       </div> */}
-      <div className=" flex aspect-square h-8 items-center justify-center rounded-full bg-neutral-800">
-        <Link21 className=" rotate-90 text-white" />
+      <div className=" relative aspect-square w-8">
+        <Image
+          src="/images/logo-linkstation.png"
+          fill
+          alt="logo"
+          className=" object-contain"
+        />
       </div>
-      Catalink
+      <span className=" text-xl font-bold text-violet-700">
+        Link<span className=" font-medium text-neutral-800">station</span>
+      </span>
+
+      {/* <div className="grid w-6 grid-cols-3">
+        <div className="" />
+        <div className=" aspect-square w-full rounded-tr-full bg-blue-600" />
+        <div className="" />
+        <div className="" />
+        <div className=" aspect-square w-full  bg-indigo-600" />
+        <div className="" />
+        <div className="" />
+        <div className=" aspect-square w-full rounded-bl-full bg-violet-600" />
+        <div className=" aspect-square w-full rounded-tr-full bg-purple-600" />
+      </div> */}
     </Link>
   );
 }

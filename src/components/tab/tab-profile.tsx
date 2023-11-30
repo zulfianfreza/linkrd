@@ -1,22 +1,21 @@
 "use client";
 
+import axios from "axios";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRef, useState } from "react";
+import { env } from "~/env.mjs";
 import usePreviewLoading from "~/hooks/use-preview-loading";
 import { useToast } from "~/hooks/use-toast";
+import { deleteImageCloudinary } from "~/lib/cloudinary";
 import { cn } from "~/lib/utils";
 import type { Site } from "~/server/db/schema";
 import { api } from "~/trpc/react";
+import { ICloudinaryResponse } from "~/types/shared";
+import Avatar from "../avatar";
+import Loading from "../loading";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import TabWrapper from "./tab-wrapper";
-import { env } from "~/env.mjs";
-import { deleteImageCloudinary } from "~/lib/cloudinary";
-import axios, { AxiosResponse } from "axios";
-import Avatar from "../avatar";
-import Loading from "../loading";
-import { ICloudinaryResponse } from "~/types/shared";
 
 interface TabProfileProps {
   site: Site | undefined;
@@ -96,8 +95,10 @@ export default function TabProfile({ site, refetch }: TabProfileProps) {
       console.log(data);
       handleUpdateSite(data.secure_url);
     } catch (error) {
+      const err = error as Error;
       toast({
         title: "Something went wrong",
+        description: err.message,
         variant: "destructive",
       });
     } finally {
@@ -162,6 +163,7 @@ export default function TabProfile({ site, refetch }: TabProfileProps) {
               className=" h-12 w-full gap-1 rounded-full"
               variant="outline"
               onClick={handleDeleteImage}
+              disabled={isLoadingDelete || site?.profileImage == ""}
             >
               {isLoadingDelete ? (
                 <>

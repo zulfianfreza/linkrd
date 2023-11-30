@@ -21,7 +21,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { MenuItem } from "./menu-item";
+import { MenuItem, MenuItemMobile } from "./menu-item";
 
 interface NavbarProps {
   user: User | undefined;
@@ -51,10 +51,10 @@ export default function Navbar({ user, site }: NavbarProps) {
   };
 
   return (
-    <div className=" fixed z-50 w-full bg-neutral-100 p-2 pb-0">
-      <div className=" w-full rounded-full border-b bg-white p-4 pl-8">
+    <div className=" fixed z-50 w-full bg-neutral-100 p-0 md:p-2 md:pb-0">
+      <div className=" w-full rounded-none border-b bg-white p-4 md:rounded-full md:p-3">
         <div className="flex w-full items-center justify-between">
-          <Logo className=" mr-8" path="/admin" />
+          <Logo className=" ml-0 md:ml-4 md:mr-2 lg:mr-8" path="/admin" />
           <div className=" hidden w-full flex-1 gap-x-2 overflow-x-scroll [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden ">
             {MENU.map((menu, index) => (
               <MenuItem
@@ -68,7 +68,7 @@ export default function Navbar({ user, site }: NavbarProps) {
 
           <div className="flex gap-2">
             <DropdownMenu>
-              <DropdownMenuTrigger className=" flex h-10 items-center justify-center gap-1 rounded-full border px-4 hover:bg-neutral-100">
+              <DropdownMenuTrigger className=" flex h-12 items-center justify-center gap-1 rounded-full border border-neutral-200 px-6 hover:bg-neutral-100 focus:outline-none">
                 <ExportCurve size={20} />
                 <p className=" text-sm font-medium">Share</p>
               </DropdownMenuTrigger>
@@ -77,11 +77,11 @@ export default function Navbar({ user, site }: NavbarProps) {
                   <div className="relative flex items-center justify-center">
                     {/* <div className=" w-9" /> */}
                     <h1 className=" font-semibold text-neutral-800">
-                      Share your Catalink
+                      Share your Linkstation
                     </h1>
                   </div>
                   <p className=" mt-2 text-sm text-neutral-500">
-                    Get more visitors by sharing your Linktree everywhere.
+                    Get more visitors by sharing your LinkStation everywhere.
                   </p>
                 </div>
 
@@ -95,8 +95,8 @@ export default function Navbar({ user, site }: NavbarProps) {
                       <div className=" flex aspect-square h-12 items-center justify-center rounded-lg bg-[#cce703]">
                         <Global size={24} />
                       </div>
-                      <h1 className=" font-semibold text-neutral-800">
-                        Open my Catalink
+                      <h1 className=" text-sm font-medium text-neutral-800">
+                        Open my Linkstation
                       </h1>
                     </div>
                     <ExportSquare size={20} />
@@ -127,11 +127,11 @@ export default function Navbar({ user, site }: NavbarProps) {
                       ? site.profileImage
                       : user?.image
                   }
-                  className=" h-10 w-10"
+                  className=" h-12 w-12"
                 />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className=" absolute -right-5 w-80 rounded-3xl p-2">
-                <div className="flex gap-4 p-4">
+              <DropdownMenuContent className=" absolute -right-5 w-[360px] rounded-3xl p-4">
+                <div className="mb-4 flex gap-4 overflow-hidden p-4">
                   <Avatar
                     src={
                       site?.profileImage && site.profileImage != ""
@@ -140,13 +140,15 @@ export default function Navbar({ user, site }: NavbarProps) {
                     }
                     className=" h-12 w-12"
                   />
-                  <div className=" flex flex-col">
+                  <div className=" flex flex-1 flex-col overflow-hidden">
                     <h1 className=" text-lg font-semibold text-neutral-800">
                       {site?.profileTitle && site.profileTitle != ""
                         ? site.profileTitle
                         : user?.name}
                     </h1>
-                    <p className=" text-sm text-neutral-500">{domain}</p>
+                    <p className=" truncate text-ellipsis text-sm text-neutral-500">
+                      {domain}
+                    </p>
                   </div>
                 </div>
                 <button
@@ -160,6 +162,16 @@ export default function Navbar({ user, site }: NavbarProps) {
             </DropdownMenu>
           </div>
         </div>
+      </div>
+      <div className=" flex w-full border-b border-b-gray-100 bg-white shadow-sm md:hidden">
+        {MENU.map((menu, index) => (
+          <MenuItemMobile
+            key={index}
+            href={menu.href}
+            label={menu.label}
+            icon={menu.icon}
+          />
+        ))}
       </div>
     </div>
   );

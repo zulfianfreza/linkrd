@@ -22,7 +22,7 @@ export async function generateMetadata({
 
   if (!user) {
     return {
-      title: "Catalink | Page Not Found",
+      title: "Linkstation | Page Not Found",
     };
   }
 

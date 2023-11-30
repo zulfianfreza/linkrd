@@ -7,7 +7,7 @@ const SkeletonTabBackground = () => {
   return (
     <TabWrapper title="Themes">
       <div className=" mt-2 rounded-[24px] bg-white p-6">
-        <div className="grid grid-cols-4 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-3 gap-6 md:grid-cols-3 lg:grid-cols-4">
           {[0, 0, 0, 0, 0, 0, 0, 0, 0].map((_, index) => (
             <div key={index} className="flex flex-col items-center gap-2">
               <Skeleton className=" aspect-[10/16] w-full rounded-lg" />
