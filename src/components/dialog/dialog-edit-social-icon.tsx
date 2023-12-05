@@ -75,80 +75,82 @@ export default function DialogEditSocialIcon({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="w-full max-w-lg gap-0 p-0 pb-6 sm:rounded-3xl">
-        {step == "EDIT" ? (
-          <>
-            <div className="relative flex items-center justify-between p-4 pb-4">
-              <div className=" w-9"></div>
-              <h1 className=" font-semibold text-neutral-800">
-                Edit {selectedSocialIcon?.label}
-              </h1>
-              <button
-                className=" rounded-lg p-2 hover:bg-neutral-100"
-                onClick={handleClose}
-              >
-                <LuX size={20} />
-              </button>
-            </div>
-
-            <div className=" px-6">
-              <Input
-                label="URL"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              />
-
-              <div className=" mt-6 space-y-2">
-                <Button
-                  className=" h-12 w-full rounded-full"
-                  onClick={handleUpdateSocialIcon}
+      <DialogContent className=" w-full max-w-xl border-none bg-transparent p-5 shadow-none">
+        <div className="w-full gap-0 rounded-3xl border bg-white p-0 pb-6 shadow-lg">
+          {step == "EDIT" ? (
+            <>
+              <div className="relative flex items-center justify-between p-4 pb-4">
+                <div className=" w-9"></div>
+                <h1 className=" font-semibold text-neutral-800">
+                  Edit {selectedSocialIcon?.label}
+                </h1>
+                <button
+                  className=" rounded-lg p-2 hover:bg-neutral-100"
+                  onClick={handleClose}
                 >
-                  Update
-                </Button>
-                <Button
-                  className=" h-12 w-full rounded-full"
-                  variant="outline"
-                  onClick={() => setStep("DELETE")}
-                >
-                  Remove Icon
-                </Button>
+                  <LuX size={20} />
+                </button>
               </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="relative flex items-center justify-between p-4 pb-4">
-              <div className=" w-9"></div>
-              <h1 className=" font-semibold text-neutral-800">
-                Remove Icon {selectedSocialIcon?.label}
-              </h1>
-              <button
-                className=" rounded-lg p-2 hover:bg-neutral-100"
-                onClick={handleClose}
-              >
-                <LuX size={20} />
-              </button>
-            </div>
 
-            <div className=" px-6">
-              <div className="space-y-2">
-                <Button
-                  className=" h-12 w-full rounded-full"
-                  onClick={handleDeleteSocialIcon}
-                >
-                  Yes, remove
-                </Button>
-                <Button
-                  className=" h-12 w-full rounded-full"
-                  variant="outline"
-                  onClick={() => setStep("EDIT")}
-                >
-                  Cancel
-                </Button>
+              <div className=" px-6">
+                <Input
+                  label="URL"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                />
+
+                <div className=" mt-6 space-y-2">
+                  <Button
+                    className=" h-12 w-full rounded-full"
+                    onClick={handleUpdateSocialIcon}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    className=" h-12 w-full rounded-full"
+                    variant="outline"
+                    onClick={() => setStep("DELETE")}
+                  >
+                    Remove Icon
+                  </Button>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <div className="relative flex items-center justify-between p-4 pb-4">
+                <div className=" w-9"></div>
+                <h1 className=" font-semibold text-neutral-800">
+                  Remove Icon {selectedSocialIcon?.label}
+                </h1>
+                <button
+                  className=" rounded-lg p-2 hover:bg-neutral-100"
+                  onClick={handleClose}
+                >
+                  <LuX size={20} />
+                </button>
+              </div>
+
+              <div className=" px-6">
+                <div className="space-y-2">
+                  <Button
+                    className=" h-12 w-full rounded-full"
+                    onClick={handleDeleteSocialIcon}
+                  >
+                    Yes, remove
+                  </Button>
+                  <Button
+                    className=" h-12 w-full rounded-full"
+                    variant="outline"
+                    onClick={() => setStep("EDIT")}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );

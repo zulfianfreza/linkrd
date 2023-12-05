@@ -7,7 +7,7 @@ import { LuX } from "react-icons/lu";
 import usePreviewLoading from "~/hooks/use-preview-loading";
 import { useToast } from "~/hooks/use-toast";
 import { SOCIAL_ICON_LIST } from "~/lib/data/social-icon";
-import { cn } from "~/lib/utils";
+import { cn, isValidUrl } from "~/lib/utils";
 import type { SocialIcon } from "~/server/db/schema";
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
@@ -113,76 +113,79 @@ export default function DialogAddSocialIcon({
       open={dialogAddSocialIcon.isOpen}
       onOpenChange={toggleDialogSocialIcon}
     >
-      <DialogContent className=" h-fit w-full gap-0 rounded-3xl  p-0 pb-6 sm:rounded-3xl md:max-w-lg">
-        {step == "LIST" ? (
-          <>
-            <div className="relative flex items-center justify-between p-4 pb-4">
-              <div className=" w-9"></div>
-              <h1 className=" font-semibold text-neutral-800">Add Icon</h1>
-              <button
-                className=" rounded-lg p-2 hover:bg-neutral-100"
-                onClick={toggleDialogSocialIcon}
-              >
-                <LuX size={20} />
-              </button>
-            </div>
-            <div className=" sticky top-0 bg-white px-6 py-2">
-              <Input
-                label="Search icon"
-                value={searchIcon}
-                onChange={handleSearchIcon}
-              />
-            </div>
-            <div className=" relative h-[400px] w-full overflow-y-scroll">
-              <div className=" px-6">
-                {listIcon.map((icon, index) => (
-                  <IconItem
-                    icon={icon}
-                    key={index}
-                    disabled={socialIcons?.some(
-                      (socialIcon) => socialIcon.iconId == icon.id,
-                    )}
-                    onClick={() => handleSelectedSocialIcon(icon.id)}
-                  />
-                ))}
-              </div>
-            </div>
-          </>
-        ) : step == "ADD" ? (
-          <>
-            <div className="relative flex items-center justify-between p-4 pb-4">
-              <button
-                className=" rounded-lg p-2 hover:bg-neutral-100"
-                onClick={() => {
-                  setStep("LIST");
-                }}
-              >
-                <ArrowLeft size={20} />
-              </button>
-              <h1 className=" font-semibold text-neutral-800">
-                Add {socialIcon?.label} Icon
-              </h1>
-              <button className=" rounded-lg p-2 hover:bg-neutral-100">
-                <LuX size={20} />
-              </button>
-            </div>
-            <div className=" relative w-full overflow-y-scroll">
-              <div className="space-y-4 bg-white px-6 pt-2">
-                <Input
-                  label={`Enter ${socialIcon?.label} URL`}
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                />
-                <Button
-                  className=" h-12 w-full rounded-full"
-                  onClick={handleAddSocialIcon}
+      <DialogContent className=" w-full max-w-xl border-none bg-transparent p-5 shadow-none">
+        <div className="w-full gap-0 rounded-3xl border bg-white p-0 pb-6 shadow-lg">
+          {step == "LIST" ? (
+            <>
+              <div className="relative flex items-center justify-between p-4 pb-4">
+                <div className=" w-9"></div>
+                <h1 className=" font-semibold text-neutral-800">Add Icon</h1>
+                <button
+                  className=" rounded-lg p-2 hover:bg-neutral-100"
+                  onClick={toggleDialogSocialIcon}
                 >
-                  ADD
-                </Button>
+                  <LuX size={20} />
+                </button>
               </div>
-            </div>
-          </>
-        ) : null}
+              <div className=" sticky top-0 bg-white px-6 py-2">
+                <Input
+                  label="Search icon"
+                  value={searchIcon}
+                  onChange={handleSearchIcon}
+                />
+              </div>
+              <div className=" relative h-[400px] w-full overflow-y-scroll">
+                <div className=" px-6">
+                  {listIcon.map((icon, index) => (
+                    <IconItem
+                      icon={icon}
+                      key={index}
+                      disabled={socialIcons?.some(
+                        (socialIcon) => socialIcon.iconId == icon.id,
+                      )}
+                      onClick={() => handleSelectedSocialIcon(icon.id)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : step == "ADD" ? (
+            <>
+              <div className="relative flex items-center justify-between p-4 pb-4">
+                <button
+                  className=" rounded-lg p-2 hover:bg-neutral-100"
+                  onClick={() => {
+                    setStep("LIST");
+                  }}
+                >
+                  <ArrowLeft size={20} />
+                </button>
+                <h1 className=" font-semibold text-neutral-800">
+                  Add {socialIcon?.label} Icon
+                </h1>
+                <button className=" rounded-lg p-2 hover:bg-neutral-100">
+                  <LuX size={20} />
+                </button>
+              </div>
+              <div className=" relative w-full overflow-y-scroll">
+                <div className="space-y-4 bg-white px-6 pt-2">
+                  <Input
+                    label={`Enter ${socialIcon?.label} URL`}
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                  />
+                  <Button
+                    className=" h-12 w-full rounded-full"
+                    onClick={handleAddSocialIcon}
+                    disabled={!isValidUrl(url)}
+                  >
+                    ADD
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) : null}
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -14,9 +14,9 @@ const monserrat = Noto_Sans({
 });
 
 export const metadata = {
-  title: "Linkstation",
+  title: "Linkrd",
   description: "Link in bio website",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/images/logo-linkstation.png" }],
 };
 
 export default function RootLayout({

@@ -6,7 +6,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { HiChevronRight } from "react-icons/hi";
-import { SiFacebook, SiInstagram, SiTiktok, SiX } from "react-icons/si";
+import {
+  SiGithub,
+  SiInstagram,
+  SiLinkedin,
+  SiTiktok,
+  SiTwitch,
+  SiX,
+} from "react-icons/si";
 import { Tilt } from "react-tilt";
 import Logo from "~/components/logo";
 import { Button } from "~/components/ui/button";
@@ -80,8 +87,8 @@ export default function ClientHomePage({
               One link to everything.
             </h1>
             <p className=" mt-4 text-violet-300">
-              Linkstation is a single link that you can share in your bio or
-              social media posts.
+              Linkrd is a single link that you can share in your bio or social
+              media posts.
             </p>
           </div>
           <div className=" mt-8 flex gap-x-2">
@@ -104,9 +111,165 @@ export default function ClientHomePage({
         <div className="relative hidden flex-1 justify-end md:flex">
           <Tilt
             options={defaultOptions}
-            className="  relative mt-20 rotate-2 md:w-[400px] lg:w-[450px] xl:w-[520px]"
+            className="  relative rotate-2 md:w-[400px] lg:w-[450px] xl:w-[520px]"
             style={{ transformStyle: "preserve-3d" }}
           >
+            <div className=" flex h-[724px] w-[375px] scale-75 flex-col rounded-[40px] bg-[#fff] p-6 py-10">
+              <div className="flex flex-col items-center">
+                <div className=" relative aspect-square w-24 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/53.png"
+                    fill
+                    alt=""
+                    className=" object-cover"
+                  />
+                </div>
+                <div className=" mt-4 text-center">
+                  <h1 className=" text-lg font-semibold text-neutral-800">
+                    Julian D. Erza
+                  </h1>
+                  <p className=" text-sm text-neutral-800">
+                    Code Crafter | Nyctophile | Vintage
+                  </p>
+                </div>
+                <div className=" mt-4 flex items-center gap-2">
+                  <SiX size={16} className=" text-neutral-800" />
+                  <SiLinkedin size={16} className=" text-neutral-800" />
+                  <SiTwitch size={16} className=" text-neutral-800" />
+                  <SiInstagram size={16} className=" text-neutral-800" />
+                  <SiGithub size={16} className=" text-neutral-800" />
+                </div>
+              </div>
+            </div>
+            <div
+              className=" absolute right-20 top-10"
+              style={{ transform: "translateZ(-20px)" }}
+            >
+              <div className=" relative  aspect-square w-[212px]">
+                <Image
+                  src="/images/vinyl.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div>
+            <div
+              className=" absolute bottom-10 right-1/3 flex translate-x-1/2 items-center gap-2"
+              style={{ transform: "translateZ(20px)" }}
+            >
+              <div className=" flex aspect-square h-12 items-center justify-center rounded-full bg-neutral-800">
+                <SiX className=" text-white" />
+              </div>
+              <div className=" flex aspect-square h-12 items-center justify-center rounded-full bg-neutral-800">
+                <SiTwitch className=" text-white" />
+              </div>
+              <div className=" flex aspect-square h-12 items-center justify-center rounded-full bg-neutral-800">
+                <SiGithub className=" text-white" />
+              </div>
+            </div>
+            <div
+              className=" absolute -left-10 bottom-0"
+              style={{ transform: "translateZ(30px)" }}
+            >
+              <div className=" w-[212px] rounded-2xl bg-white p-2.5 shadow-lg">
+                <div className=" relative aspect-video w-full">
+                  <Image
+                    src="/images/vintage-radio.jpg"
+                    fill
+                    alt=""
+                    className=" object-contain"
+                  />
+                </div>
+                <p className=" mt-4 text-sm font-medium text-neutral-800">
+                  Retro Vintage Radio
+                </p>
+              </div>
+            </div>
+            <div
+              className="absolute top-0 flex h-[696px] w-[375px] scale-75 flex-col rounded-[40px] p-6 py-10"
+              // style={{ transform: "translateZ(10px)" }}
+            >
+              <div className=" mt-56 flex flex-col gap-2">
+                {["My Website", "Coding Journey", "Black Inspirations"].map(
+                  (label, i) => (
+                    <button
+                      key={i}
+                      style={{ transform: "translateZ(20px)" }}
+                      className=" flex h-14 w-full items-center justify-center rounded-lg bg-neutral-800 text-sm font-medium text-white"
+                    >
+                      {label}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+            {/* <div className=" relative h-full w-full">
+              <Image
+                src="/images/link1.png"
+                fill
+                alt=""
+                className=" object-contain"
+              />
+            </div>
+            <div
+              className=" absolute bottom-4 left-10"
+              style={{ transform: "translateZ(30px)" }}
+            >
+              <div className="  relative aspect-square  w-44">
+                <Image
+                  src="/images/link1-glasses.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div>
+            <div
+              className=" absolute -right-10 top-0"
+              style={{ transform: "translateZ(-10px)" }}
+            >
+              <div className="  relative aspect-square  w-80">
+                <Image
+                  src="/images/link1-beanie.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div>
+            <div
+              className=" absolute bottom-0 right-10"
+              style={{ transform: "translateZ(15px)" }}
+            >
+              <div className="  relative aspect-square  w-40">
+                <Image
+                  src="/images/link1-social.png"
+                  fill
+                  alt=""
+                  className=" object-contain"
+                />
+              </div>
+            </div> */}
+          </Tilt>
+        </div>
+      </div>
+
+      <div className=" flex h-screen w-full overflow-hidden bg-sky-200 p-10">
+        <div className="relative hidden flex-1 justify-center md:flex">
+          <Tilt
+            options={defaultOptions}
+            className="  mt-20 md:w-[400px] lg:w-[450px] xl:w-[480px]"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {/* <div className=" relative h-full w-full rotate-2">
+              <Image
+                src="/images/thumbnail-hero.png"
+                fill
+                alt=""
+                className=" object-contain"
+              />
+            </div> */}
             <div className=" relative h-full w-full">
               <Image
                 src="/images/link1.png"
@@ -156,30 +319,12 @@ export default function ClientHomePage({
             </div>
           </Tilt>
         </div>
-      </div>
-
-      <div className=" flex h-screen w-full overflow-hidden bg-green-300 p-10">
-        <div className="relative hidden flex-1 justify-center md:flex">
-          <Tilt
-            options={defaultOptions}
-            className="  mt-20 md:w-[400px] lg:w-[450px] xl:w-[480px]"
-          >
-            <div className=" relative h-full w-full rotate-2">
-              <Image
-                src="/images/thumbnail-hero.png"
-                fill
-                alt=""
-                className=" object-contain"
-              />
-            </div>
-          </Tilt>
-        </div>
         <div className=" flex flex-1 flex-col items-start justify-center">
           <div className="">
-            <h1 className="text-[56px] font-black leading-none text-green-900 md:text-[56px] lg:text-[72px]">
-              Create and customize your Linkstation in minutes
+            <h1 className="text-[56px] font-black leading-none text-sky-900 md:text-[56px] lg:text-[72px]">
+              Create and customize your Linkrd in minutes
             </h1>
-            <p className=" mt-4 font-medium text-green-900">
+            <p className=" mt-4 font-medium text-sky-900">
               Connect your TikTok, Instagram, Twitter, website, store, videos,
               music, podcast, events and more. It all comes together in a link
               in bio landing page designed to convert.
@@ -193,7 +338,7 @@ export default function ClientHomePage({
                 await signIn("google");
               }
             }}
-            className=" mt-8 flex h-14 items-center justify-center rounded-full bg-green-900 px-6 text-sm text-white hover:bg-green-900/90 "
+            className=" mt-8 flex h-14 items-center justify-center rounded-full bg-sky-900 px-6 text-sm text-white hover:bg-sky-900/90 "
           >
             <p className=" flex items-center gap-x-1 font-medium">
               Get Started for Free
@@ -229,7 +374,7 @@ export default function ClientHomePage({
               <SiInstagram className=" text-white" size={24} />
             </div>
             <div className=" flex aspect-square w-14 items-center justify-center rounded-full bg-neutral-800">
-              <SiX className=" text-white" size={24} />
+              <SiGithub className=" text-white" size={24} />
             </div>
           </div>
         </div>

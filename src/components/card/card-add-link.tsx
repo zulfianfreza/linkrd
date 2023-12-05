@@ -9,6 +9,7 @@ import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
 import usePreviewLoading from "~/hooks/use-preview-loading";
 import HeaderIcon from "../icon/header-icon";
+import { isValidUrl } from "~/lib/utils";
 
 interface CardAddLinkProps {
   hotReload: () => void;
@@ -112,6 +113,7 @@ export default function CardAddLink({ hotReload }: CardAddLinkProps) {
               <Button
                 className=" h-12 rounded-full px-8"
                 onClick={handleAddButtonLink}
+                disabled={!isValidUrl(url)}
               >
                 ADD
               </Button>

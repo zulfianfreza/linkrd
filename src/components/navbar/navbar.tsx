@@ -77,11 +77,11 @@ export default function Navbar({ user, site }: NavbarProps) {
                   <div className="relative flex items-center justify-center">
                     {/* <div className=" w-9" /> */}
                     <h1 className=" font-semibold text-neutral-800">
-                      Share your Linkstation
+                      Share your Linkrd
                     </h1>
                   </div>
                   <p className=" mt-2 text-sm text-neutral-500">
-                    Get more visitors by sharing your LinkStation everywhere.
+                    Get more visitors by sharing your Linkrd everywhere.
                   </p>
                 </div>
 
@@ -96,7 +96,7 @@ export default function Navbar({ user, site }: NavbarProps) {
                         <Global size={24} />
                       </div>
                       <h1 className=" text-sm font-medium text-neutral-800">
-                        Open my Linkstation
+                        Open my Linkrd
                       </h1>
                     </div>
                     <ExportSquare size={20} />

@@ -505,131 +505,133 @@ export default function CardButtonLink({
       </div>
 
       <Dialog open={dialogAddThumbnail} onOpenChange={toggleDialogAddThumbnail}>
-        <DialogContent className=" w-full max-w-lg gap-0 p-0 pb-6 sm:rounded-3xl">
-          {stepDialog == "ADD" ? (
-            <>
-              <div className="relative flex items-center justify-between p-4 pb-4">
-                <div className=" w-9"></div>
-                <h1 className=" font-semibold text-neutral-800">
-                  Add Thumbnail
-                </h1>
-                <button
-                  className=" rounded-lg p-2 hover:bg-neutral-100"
-                  onClick={toggleDialogAddThumbnail}
-                >
-                  <LuX size={20} />
-                </button>
-              </div>
+        <DialogContent className=" w-full max-w-xl border-none bg-transparent p-5 shadow-none">
+          <div className="w-full gap-0 rounded-3xl border bg-white p-0 pb-6 shadow-lg">
+            {stepDialog == "ADD" ? (
+              <>
+                <div className="relative flex items-center justify-between p-4 pb-4">
+                  <div className=" w-9"></div>
+                  <h1 className=" font-semibold text-neutral-800">
+                    Add Thumbnail
+                  </h1>
+                  <button
+                    className=" rounded-lg p-2 hover:bg-neutral-100"
+                    onClick={toggleDialogAddThumbnail}
+                  >
+                    <LuX size={20} />
+                  </button>
+                </div>
 
-              <div className=" px-6">
-                <div className="">
-                  <input
-                    type="file"
-                    name=""
-                    id=""
-                    className="hidden"
-                    ref={inputRef}
-                    onChange={handleUploadImage}
-                    accept="image/png, image/jpg, image/jpeg"
-                  />
+                <div className=" px-6">
+                  <div className="">
+                    <input
+                      type="file"
+                      name=""
+                      id=""
+                      className="hidden"
+                      ref={inputRef}
+                      onChange={handleUploadImage}
+                      accept="image/png, image/jpg, image/jpeg"
+                    />
+                    <button
+                      className="flex w-full items-center justify-between rounded-xl p-4 hover:bg-neutral-100"
+                      onClick={handleClick}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className=" flex aspect-square w-12 items-center justify-center rounded-xl bg-violet-200">
+                          <EmojiHappy
+                            variant="Bulk"
+                            size={36}
+                            className=" text-violet-700"
+                          />
+                        </div>
+                        <div className="flex flex-col items-start">
+                          <h1 className=" font-medium text-neutral-800">
+                            Upload your own thumbnail
+                          </h1>
+                          <p className=" text-sm text-neutral-500">
+                            Upload from your computer
+                          </p>
+                        </div>
+                      </div>
+
+                      <ArrowRight2 size={20} />
+                    </button>
+                  </div>
+
                   <button
                     className="flex w-full items-center justify-between rounded-xl p-4 hover:bg-neutral-100"
-                    onClick={handleClick}
+                    onClick={() => setStepDialog("ICON")}
                   >
                     <div className="flex items-center gap-4">
-                      <div className=" flex aspect-square w-12 items-center justify-center rounded-xl bg-violet-200">
-                        <EmojiHappy
-                          variant="Bulk"
-                          size={36}
-                          className=" text-violet-700"
+                      <div className=" relative flex aspect-square w-12 overflow-hidden rounded-xl bg-neutral-100 p-1">
+                        <Image
+                          src="/images/select-modal--icons.webp"
+                          fill
+                          alt="selectmodal"
+                          className=" object-cover "
                         />
                       </div>
                       <div className="flex flex-col items-start">
                         <h1 className=" font-medium text-neutral-800">
-                          Upload your own thumbnail
+                          Choose from Simple Icons
                         </h1>
-                        <p className=" text-sm text-neutral-500">
-                          Upload from your computer
-                        </p>
                       </div>
                     </div>
 
                     <ArrowRight2 size={20} />
                   </button>
                 </div>
-
-                <button
-                  className="flex w-full items-center justify-between rounded-xl p-4 hover:bg-neutral-100"
-                  onClick={() => setStepDialog("ICON")}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className=" relative flex aspect-square w-12 overflow-hidden rounded-xl bg-neutral-100 p-1">
-                      <Image
-                        src="/images/select-modal--icons.webp"
-                        fill
-                        alt="selectmodal"
-                        className=" object-cover "
-                      />
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <h1 className=" font-medium text-neutral-800">
-                        Choose from Simple Icons
-                      </h1>
-                    </div>
-                  </div>
-
-                  <ArrowRight2 size={20} />
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="relative flex items-center justify-between p-4 pb-4">
-                <button
-                  className=" rounded-lg p-2 hover:bg-neutral-100"
-                  onClick={() => {
-                    setStepDialog("ADD");
-                  }}
-                >
-                  <ArrowLeft size={20} />
-                </button>
-                <h1 className=" font-semibold text-neutral-800">
-                  Add Thumbnail Icon
-                </h1>
-                <button className=" rounded-lg p-2 hover:bg-neutral-100">
-                  <LuX size={20} />
-                </button>
-              </div>
-
-              <div className=" bg-white px-6 py-2 pb-6">
-                <Input
-                  label="Search icon"
-                  value={searchIcon}
-                  onChange={handleSearchIcon}
-                />
-              </div>
-
-              <div className=" max-h-[320px] min-h-[320px] overflow-y-auto px-6">
-                <div className=" grid grid-cols-5 gap-2">
-                  {listIcon.map((icon, index) => (
-                    <button
-                      onClick={() => {
-                        handleUpdateIcon(icon.id);
-                      }}
-                      key={index}
-                      className=" flex aspect-square w-full items-center justify-center rounded-lg border hover:border-black"
-                    >
-                      <Icon
-                        icon={icon.icon}
-                        size={24}
-                        className=" text-gray-800"
-                      />
-                    </button>
-                  ))}
+              </>
+            ) : (
+              <>
+                <div className="relative flex items-center justify-between p-4 pb-4">
+                  <button
+                    className=" rounded-lg p-2 hover:bg-neutral-100"
+                    onClick={() => {
+                      setStepDialog("ADD");
+                    }}
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                  <h1 className=" font-semibold text-neutral-800">
+                    Add Thumbnail Icon
+                  </h1>
+                  <button className=" rounded-lg p-2 hover:bg-neutral-100">
+                    <LuX size={20} />
+                  </button>
                 </div>
-              </div>
-            </>
-          )}
+
+                <div className=" bg-white px-6 py-2 pb-6">
+                  <Input
+                    label="Search icon"
+                    value={searchIcon}
+                    onChange={handleSearchIcon}
+                  />
+                </div>
+
+                <div className=" max-h-[320px] min-h-[320px] overflow-y-auto px-6">
+                  <div className=" grid grid-cols-5 gap-2">
+                    {listIcon.map((icon, index) => (
+                      <button
+                        onClick={() => {
+                          handleUpdateIcon(icon.id);
+                        }}
+                        key={index}
+                        className=" flex aspect-square w-full items-center justify-center rounded-lg border hover:border-black"
+                      >
+                        <Icon
+                          icon={icon.icon}
+                          size={24}
+                          className=" text-gray-800"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </div>

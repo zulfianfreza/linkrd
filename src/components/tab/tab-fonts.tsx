@@ -9,13 +9,7 @@ import type { ThemeSchema } from "~/server/api/schemas/theme";
 import type { Theme } from "~/server/db/schema";
 import ColorPicker from "../color-picker";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog";
+import { Dialog, DialogContent } from "../ui/dialog";
 import { Input } from "../ui/input";
 import TabWrapper from "./tab-wrapper";
 
@@ -100,53 +94,61 @@ export default function TabFonts({ theme, handleUpdate }: TabFontsProps) {
         </div>
       </TabWrapper>
       <Dialog open={fontDialog} onOpenChange={toggleFontDialog}>
-        <DialogContent className=" h-fit w-full gap-0 rounded-3xl p-0 sm:rounded-3xl md:max-w-lg">
-          <DialogClose className=" absolute right-2.5 top-2.5 rounded-full p-2.5 hover:bg-neutral-100">
-            <LuX />
-          </DialogClose>
-          <DialogHeader className="p-6 pb-4">
-            <DialogTitle className=" text-center">Select a Font</DialogTitle>
-          </DialogHeader>
-          <div className=" sticky top-0 bg-white px-4 py-2">
-            <Input
-              label="Search font"
-              value={searchFont}
-              onChange={handleSearchFont}
-            />
-          </div>
-          <div className=" relative h-[320px] w-full overflow-y-scroll">
-            <div className=" flex flex-col px-4">
-              {fontList.map((font, index) => (
-                <button
-                  key={index}
-                  className={cn(
-                    " flex h-12 w-full items-center justify-between rounded-full px-4  hover:bg-neutral-100",
-                    {
-                      "bg-violet-200 hover:bg-violet-200":
-                        font.label == fontFamily,
-                    },
-                  )}
-                  onClick={() => setFontFamily(font.label)}
-                >
-                  <p className={cn(" text-neutral-800", font.value.className)}>
-                    {font.label}
-                  </p>
-                  {font.label == fontFamily ? (
-                    <p className=" flex items-center gap-1 text-sm text-violet-900">
-                      <LuCheck /> Selected
-                    </p>
-                  ) : null}
-                </button>
-              ))}
+        <DialogContent className=" w-full max-w-xl border-none bg-transparent p-5 shadow-none">
+          <div className="w-full gap-0 rounded-3xl border bg-white p-0 pb-6 shadow-lg">
+            <div className="relative flex items-center justify-between p-4 pb-4">
+              <div className=" w-9"></div>
+              <h1 className=" font-semibold text-neutral-800">Select a Font</h1>
+              <button
+                className=" rounded-lg p-2 hover:bg-neutral-100"
+                onClick={toggleFontDialog}
+              >
+                <LuX size={20} />
+              </button>
             </div>
-          </div>
-          <div className=" p-4">
-            <Button
-              onClick={handleUpdateFont}
-              className=" h-12 w-full rounded-full"
-            >
-              Save
-            </Button>
+            <div className=" sticky top-0 bg-white px-4 py-2">
+              <Input
+                label="Search font"
+                value={searchFont}
+                onChange={handleSearchFont}
+              />
+            </div>
+            <div className=" relative h-[320px] w-full overflow-y-scroll">
+              <div className=" flex flex-col px-4">
+                {fontList.map((font, index) => (
+                  <button
+                    key={index}
+                    className={cn(
+                      " flex h-12 w-full items-center justify-between rounded-full px-4  hover:bg-neutral-100",
+                      {
+                        "bg-violet-200 hover:bg-violet-200":
+                          font.label == fontFamily,
+                      },
+                    )}
+                    onClick={() => setFontFamily(font.label)}
+                  >
+                    <p
+                      className={cn(" text-neutral-800", font.value.className)}
+                    >
+                      {font.label}
+                    </p>
+                    {font.label == fontFamily ? (
+                      <p className=" flex items-center gap-1 text-sm text-violet-900">
+                        <LuCheck /> Selected
+                      </p>
+                    ) : null}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className=" p-4">
+              <Button
+                onClick={handleUpdateFont}
+                className=" h-12 w-full rounded-full"
+              >
+                Save
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

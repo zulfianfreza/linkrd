@@ -6,7 +6,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
 export const metadata: Metadata = {
-  title: "Linkstation Admin",
+  title: "Linkrd Admin",
 };
 
 export default async function AdminLayout({

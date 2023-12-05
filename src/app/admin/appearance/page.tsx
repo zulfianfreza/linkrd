@@ -110,8 +110,8 @@ export default function AppearancePage() {
           Custom Theme
         </h1>
         <p className=" text-sm text-neutral-500">
-          Completely customize your Linkstation profile. Change your background
-          with colors, gradients and images. Choose a button style, change the
+          Completely customize your Linkrd profile. Change your background with
+          colors, gradients and images. Choose a button style, change the
           typeface and more.
         </p>
         {isLoadingTheme ? (

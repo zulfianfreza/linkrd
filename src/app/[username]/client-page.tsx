@@ -27,7 +27,6 @@ import type {
   ILink,
 } from "~/types/link";
 import type { ISite } from "~/types/site";
-import type { BUTTON_TYPE } from "~/types/theme";
 import type { IUser } from "~/types/user";
 
 interface UsernameClientPageProps {
@@ -147,14 +146,12 @@ export default function UsernameClientPage({
                 />
                 <div className=" mt-2 flex flex-1 flex-col gap-y-2">
                   <div className=" text-center">
-                    <p className=" text-xl font-bold " style={nameStyle}>
+                    <p className=" text-lg font-semibold " style={nameStyle}>
                       {siteData?.profileTitle && siteData?.profileTitle != ""
                         ? siteData?.profileTitle
                         : user?.name}
                     </p>
-                    <p className=" text-center text-sm font-medium">
-                      {siteData?.bio}
-                    </p>
+                    <p className=" text-center text-sm">{siteData?.bio}</p>
                   </div>
                 </div>
               </div>
@@ -165,7 +162,7 @@ export default function UsernameClientPage({
                 "flex-col-reverse": themeData?.socialIconPosition == "bottom",
               })}
             >
-              <div className="flex flex-wrap items-center justify-center gap-2">
+              <div className="flex flex-wrap items-center justify-center gap-2.5">
                 {socialIconsData.map((socialIcon, index) => {
                   return (
                     socialIcon.active && (
@@ -185,7 +182,7 @@ export default function UsernameClientPage({
               </div>
               <div className="flex flex-col gap-4 ">
                 {linksData.map((link) => {
-                  if (link.type == "button" && link.active) {
+                  if (link.type == "button" && link.active && link.url != "") {
                     const extraThumbnail = link.extra
                       ? (JSON.parse(link.extra ?? "") as IExtraThumbnail)
                       : null;
@@ -197,7 +194,7 @@ export default function UsernameClientPage({
                         href="/"
                         key={link.id}
                         target="_blank"
-                        className=" relative flex min-h-[56px] w-full items-center justify-center px-[56px] py-4 font-medium transition duration-300 ease-in-out hover:scale-[1.05]"
+                        className=" relative flex min-h-[56px] w-full items-center justify-center px-[56px] py-4 text-sm font-medium transition duration-300 ease-in-out hover:scale-[1.05]"
                         style={getButtonStyle(themeData!)}
                       >
                         {link.extra &&

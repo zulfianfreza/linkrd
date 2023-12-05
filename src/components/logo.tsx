@@ -30,7 +30,7 @@ export default function Logo({ className, path, target }: LogoProps) {
         <div className=" h-6 w-3 rounded-bl-full rounded-tr-full border-2 border-violet-700"></div>
         <div className=" -ml-[2px] mt-[22px] h-2 w-4 rounded-bl-full rounded-tr-full border-2 border-violet-700"></div>
       </div> */}
-      <div className=" relative aspect-square w-8">
+      <div className=" relative aspect-square w-6">
         <Image
           src="/images/logo-linkstation.png"
           fill
@@ -38,8 +38,8 @@ export default function Logo({ className, path, target }: LogoProps) {
           className=" object-contain"
         />
       </div>
-      <span className=" text-xl font-bold text-violet-700">
-        Link<span className=" font-medium text-neutral-800">station</span>
+      <span className=" text-lg font-medium text-neutral-800">
+        Linkrd<span className=" font-medium text-neutral-800"></span>
       </span>
 
       {/* <div className="grid w-6 grid-cols-3">

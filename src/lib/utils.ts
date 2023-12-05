@@ -11,3 +11,15 @@ export function getVideoIdFromYoutubeUrl(url: string) {
   const match = url.match(regExp);
   return match && match[7]?.length == 11 ? match[7] : false;
 }
+
+export function isValidUrl(string: string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}

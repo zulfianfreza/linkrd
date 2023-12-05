@@ -75,10 +75,8 @@ export default function UserInformationClientPage() {
         <div className=" flex justify-center p-10">
           <div className=" flex w-[640px] flex-col justify-center p-10 pt-28">
             <div className=" text-center">
-              <h1 className=" text-[44px] font-bold">Welcome to Linkstation</h1>
-              <p className=" text-gray-500">
-                Choose your Linkstation username.
-              </p>
+              <h1 className=" text-[44px] font-bold">Welcome to Linkrd</h1>
+              <p className=" text-gray-500">Choose your Linkrd username.</p>
             </div>
             <div className="">
               <div className=" mt-16 space-y-2">
@@ -102,7 +100,7 @@ export default function UserInformationClientPage() {
               </div>
               <p className=" mt-4 text-center text-sm text-gray-500">
                 By continuing, you agree to receive offers, news and update from
-                Linkstation.
+                Linkrd.
               </p>
               <div className=" mt-8 flex flex-col items-center gap-y-2">
                 <button
