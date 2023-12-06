@@ -8,7 +8,7 @@ export default async function UserInformationPage() {
   if (!user) {
     redirect("/");
   }
-  if (user.username != "") {
+  if (user.username && user.username != "") {
     redirect("/admin");
   }
   return <UserInformationClientPage />;

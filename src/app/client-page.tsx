@@ -68,7 +68,7 @@ export default function ClientHomePage({
         </div>
       </header>
 
-      <div className=" relative isolate flex h-[100dvh] w-full bg-violet-900 p-10 pt-20  lg:p-20">
+      <div className=" relative isolate flex aspect-video w-full bg-violet-900 p-10 pt-20  lg:p-20">
         {/* <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-20 left-20 -z-10 transform-gpu overflow-hidden leading-none blur-3xl"

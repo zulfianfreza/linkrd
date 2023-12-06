@@ -14,7 +14,7 @@ export default function PreviewPage({ username }: PreviewPageProps) {
   const { isLoading } = usePreviewLoading();
   const [domain, setDomain] = useState("");
   useEffect(() => {
-    setDomain(`${window.location.origin}/${username}`);
+    setDomain(`${window.location.origin}/${username}?is_creation_mode=true`);
   }, [username]);
   return (
     <div className="fixed right-0 hidden h-screen border-l-[1px] p-4 pt-20 md:block md:w-[316px] lg:w-[435px] xl:w-[568px]">

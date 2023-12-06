@@ -191,7 +191,7 @@ export default function UsernameClientPage({
                         onClick={() => {
                           handleClick(link.id);
                         }}
-                        href="/"
+                        href={link.url ?? "/"}
                         key={link.id}
                         target="_blank"
                         className=" relative flex min-h-[56px] w-full items-center justify-center px-[56px] py-4 text-sm font-medium transition duration-300 ease-in-out hover:scale-[1.05]"
